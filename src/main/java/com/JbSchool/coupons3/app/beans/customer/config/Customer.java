@@ -2,6 +2,7 @@ package com.JbSchool.coupons3.app.beans.customer.config;
 
 import com.JbSchool.coupons3.app.beans.purchase.config.*;
 
+import com.JbSchool.coupons3.security.entity_validator.*;
 import jakarta.persistence.*;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.*;
@@ -39,13 +40,10 @@ public class Customer {
   private String lastName;
   
   @Pattern(regexp = ".+@.+\\..+", message = "Please provide a valid email address")
-//  @EntityUniqueFieldConfig(tableName = "customers", columnName = "email", message = "Email must be unique")
+  @EntityUniqueFieldConfig(tableName = "customers", columnName = "email", message = "Email must be unique")
   @Column(name = "email", nullable = false)
   private String email;
   
-  @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[/d])(?=.*[!@#$%^&*])(?=.{8,})$"
-    , message = "Password must contain at least one uppercase letter, one lowercase letter," +
-    "one digit, one special character, and be at least 8 characters long")
   @Column(name = "password", nullable = false)
   private String password;
   
