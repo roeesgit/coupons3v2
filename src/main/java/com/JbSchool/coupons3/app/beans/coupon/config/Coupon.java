@@ -10,6 +10,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.*;
 import org.springframework.context.annotation.*;
 import org.springframework.data.annotation.*;
+import org.springframework.data.jpa.domain.support.*;
 
 import java.time.*;
 import java.util.*;
@@ -23,6 +24,7 @@ import java.util.*;
 @Entity
 @Scope("prototype")
 @Table(name = "coupons")
+@EntityListeners(AuditingEntityListener.class)
 public class Coupon {
   
   @Id

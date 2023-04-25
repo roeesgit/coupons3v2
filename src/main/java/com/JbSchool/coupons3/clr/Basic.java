@@ -20,20 +20,21 @@ import java.util.*;
 @Component
 @RequiredArgsConstructor
 public class Basic implements CommandLineRunner {
+  
   private final CouponUserRepo  couponUserRepo;
   private final CouponAuthRepo  couponAuthRepo;
-  private final  PasswordEncoder passwordEncoder;
-  private final CategoryRepo  categoryRepo;
-  private final CompanyRepo  companyRepo;
-  private final CouponRepo   couponRepo;
-  private final CustomerRepo customerRepo;
-  private final PurchaseRepo purchaseRepo;
+  private final PasswordEncoder passwordEncoder;
+  private final CategoryRepo    categoryRepo;
+  private final CompanyRepo     companyRepo;
+  private final CouponRepo      couponRepo;
+  private final CustomerRepo    customerRepo;
+  private final PurchaseRepo    purchaseRepo;
   
   private final Random random = new Random();
   
   
   @Override
-  public void run(String... args){
+  public void run(String... args) {
     Pageable limit = PageRequest.of(0, 1);
     Page <Company> companies = this.companyRepo.findAll(limit);
     
@@ -42,14 +43,18 @@ public class Basic implements CommandLineRunner {
       CouponUser admin = CouponUser.builder()
         .password(passwordEncoder.encode("admin"))
         .username("admin")
-        .couponAuths(List.of(couponAuths.get(0)))
-          .build();
+        .couponAuths(List.of(couponAuths.get(0), couponAuths.get(3), couponAuths.get(4), couponAuths.get(5), couponAuths.get(6), couponAuths.get(7)))
+        .build();
       this.couponUserRepo.save(admin);
       
       initCategories();
+      System.out.println("Categories Done");
       initCompaniesAndCoupons(couponAuths);
+      System.out.println("Companies and coupons Done");
       initCustomers(couponAuths);
+      System.out.println("Customers Done");
       initPurchases();
+      System.out.println("Purchases Done");
       
       System.out.println("init done!");
       
@@ -57,7 +62,7 @@ public class Basic implements CommandLineRunner {
   }
   
   
-  private List<CouponAuth> initCouponUsersAuth() {
+  private List <CouponAuth> initCouponUsersAuth() {
     List <CouponAuth> couponAuths = new ArrayList <>();
     for (CouponAuthorization ca : CouponAuthorization.values()) {
       CouponAuth couponAuth = CouponAuth.builder()
@@ -79,6 +84,8 @@ public class Basic implements CommandLineRunner {
     }
     categoryRepo.saveAll(categories);
   }
+  
+  
   @Transactional
   
   private void initCompaniesAndCoupons(List <CouponAuth> couponAuths) {
@@ -101,26 +108,23 @@ public class Basic implements CommandLineRunner {
       CouponUser companyUser = CouponUser.builder()
         .password(company.getPassword())
         .username(company.getEmail())
-        .couponAuths(List.of(couponAuths.get(2)))
-          .build();
-      companyRepo.save(company);
-      couponUserRepo.save(companyUser);
-      company.setCouponUser(companyUser);
-//      companiesUsers.add(companyUser);
-//      companies.add(company);
+        .couponAuths(List.of(couponAuths.get(2), couponAuths.get(3), couponAuths.get(4), couponAuths.get(5), couponAuths.get(6)))
+        .build();
+      companiesUsers.add(companyUser);
+      companies.add(company);
       for (int j = 0; j < COUPONS; j++) {
         Coupon coupon = new Coupon();
         int ranDays = random.nextInt(55) + 5;
         coupon.setAmount(random.nextInt(80) + 20);
         coupon.setEndDate(LocalDate.now().plus(4, ChronoUnit.MONTHS).plusDays(ranDays));
-        coupon.setCompany(Company.builder().id(i+1).build());
-        coupon.setCategory(CategoryProvider.values()[(random.nextInt(CategoryProvider.values().length-1) + 1)]);
+        coupon.setCompany(Company.builder().id(i + 1).build());
+        coupon.setCategory(CategoryProvider.values()[(random.nextInt(CategoryProvider.values().length - 1) + 1)]);
         coupon.setTitle("title " + (j + 1));
         coupon.setDescription("description " + (j + 1));
         coupon.setStartDate(LocalDate.now().plusDays(ranDays));
         coupon.setImage("image " + (j + 1));
         coupon.setPrice(random.nextInt(1945) + 55);
-        if (i == 0&&j==0) {
+        if (i == 0 && j == 0) {
           coupon.setCategory(CategoryProvider.values()[0]);
           coupon.setTitle("TEST " + (j + 1));
           coupon.setAmount(random.nextInt(3) + 1);
@@ -129,9 +133,9 @@ public class Basic implements CommandLineRunner {
         coupons.add(coupon);
       }
     }
-//    this.couponUserRepo.saveAll(companiesUsers);
+    this.couponUserRepo.saveAll(companiesUsers);
     this.couponRepo.saveAll(coupons);
-//    this.companyRepo.saveAll(companies);
+    this.companyRepo.saveAll(companies);
   }
   
   
@@ -141,11 +145,10 @@ public class Basic implements CommandLineRunner {
     int CUSTOMERS = 200;
     for (int i = 0; i < CUSTOMERS; i++) {
       Customer customer = new Customer();
-      String encodedPassword = this.passwordEncoder.encode("12345");
-        customer.setFirstName("first name " + (i + 1));
+      customer.setFirstName("first name " + (i + 1));
       customer.setLastName("last name " + (i + 1));
       customer.setEmail("email(" + (i + 1) + ")@gmail.com");
-      customer.setPassword(encodedPassword);
+      customer.setPassword(this.passwordEncoder.encode("12345"));
       if (i == 0) {
         customer.setFirstName("TEST");
         customer.setLastName("Testy");
@@ -156,13 +159,13 @@ public class Basic implements CommandLineRunner {
       CouponUser customerUser = CouponUser.builder()
         .password(customer.getPassword())
         .username(customer.getEmail())
-        .couponAuths(List.of(couponAuths.get(1)))
+        .couponAuths(List.of(couponAuths.get(1), couponAuths.get(4), couponAuths.get(5)))
         .build();
       customersUsers.add(customerUser);
       customers.add(customer);
     }
-      this.couponUserRepo.saveAll(customersUsers);
-      this.customerRepo.saveAll(customers);
+    this.couponUserRepo.saveAll(customersUsers);
+    this.customerRepo.saveAll(customers);
   }
   
   
