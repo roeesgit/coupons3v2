@@ -1,6 +1,7 @@
 package com.JbSchool.coupons3.security.config;
 
 import lombok.*;
+import org.apache.tomcat.websocket.*;
 import org.springframework.context.annotation.*;
 import org.springframework.http.*;
 import org.springframework.security.config.annotation.web.builders.*;
@@ -17,11 +18,10 @@ public class CouponsSecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
     return httpSecurity
       .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-      .authorizeHttpRequests((reg) -> {
-      
+      .authorizeHttpRequests(
+        (reg) -> {
+        // LOGIN / REGISTER
         reg.requestMatchers("/api/v1/auth/**").permitAll();
-        
-        reg.requestMatchers("/api/v1/demo/**").hasAnyAuthority("GET");
         
         reg.requestMatchers(HttpMethod.PUT,"/api/v1/companies/**").hasAnyAuthority("ROLE_COMPANY");
         reg.requestMatchers(HttpMethod.GET,"/api/v1/companies/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_COMPANY");
