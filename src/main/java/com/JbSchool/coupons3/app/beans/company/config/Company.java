@@ -66,7 +66,6 @@ public class Company {
   @OneToMany(mappedBy = "company", cascade = {CascadeType.REMOVE})
   private List <Coupon> coupons;
   
-  @OneToOne(cascade = {CascadeType.REMOVE,CascadeType.PERSIST})
-  private CouponUser couponUser;
+
   
 }
