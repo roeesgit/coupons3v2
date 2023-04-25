@@ -25,12 +25,12 @@ public class  CouponUser implements UserDetails {
     private String username;
     private String password;
     
-  @ManyToMany(fetch = FetchType.EAGER ,cascade = {CascadeType.REMOVE,CascadeType.PERSIST})
+  @ManyToMany(fetch = FetchType.EAGER ,cascade = {CascadeType.REMOVE})
   @JoinTable(name = "coupon_users_auth",
   joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "auth_id"))
   private List <CouponAuth> couponAuths;
-//  private Set <GrantedAuthority> couponAuths;
+//  private List <GrantedAuthority> couponAuths;
   
   
   @Override

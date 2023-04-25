@@ -21,7 +21,7 @@ public class AuthService {
       CouponUser user = this.couponUserService.loadUserByUsername(loginRequestDTO.getUsername());
   
       String token = this.tokenConfig.generateToken(this.tokenConfig
-        .buildClaims(user/*,(Set <GrantedAuthority>) user.getAuthorities()*/));
+        .buildClaims(user/*,(List <GrantedAuthority>) user.getAuthorities()*/));
       return new TokenResponseDTO(token);
     }
     return null;

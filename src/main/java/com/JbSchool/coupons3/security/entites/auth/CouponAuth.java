@@ -26,7 +26,7 @@ import java.util.*;
     
 @ToString.Exclude
   @ManyToMany(mappedBy = "couponAuths")
-  private Set <CouponUser> couponUserSet;
+  private List <CouponUser> couponUserSet;
   
   
 //  @Override

@@ -28,7 +28,7 @@ public class CouponUserService implements UserDetailsService {
     
     user.setPassword(this.passwordEncoder.encode(user.getPassword()));
     this.couponUserRepo.save(user);
-    String token = this.tokenConfig.generateToken(this.tokenConfig.buildClaims(user/*, (Set <GrantedAuthority>) user.getAuthorities()*/));
+    String token = this.tokenConfig.generateToken(this.tokenConfig.buildClaims(user/*, (List <GrantedAuthority>) user.getAuthorities()*/));
     return new TokenResponseDTO(token);
   }
   

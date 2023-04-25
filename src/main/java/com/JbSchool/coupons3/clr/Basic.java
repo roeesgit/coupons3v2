@@ -19,7 +19,6 @@ import java.time.temporal.*;
 import java.util.*;
 @Component
 @RequiredArgsConstructor
-@Transactional
 public class Basic implements CommandLineRunner {
   private final CouponUserRepo  couponUserRepo;
   private final CouponAuthRepo  couponAuthRepo;
@@ -59,7 +58,7 @@ public class Basic implements CommandLineRunner {
   
   
   private List<CouponAuth> initCouponUsersAuth() {
-    Set <CouponAuth> couponAuths = new HashSet <>();
+    List <CouponAuth> couponAuths = new ArrayList <>();
     for (CouponAuthorization ca : CouponAuthorization.values()) {
       CouponAuth couponAuth = CouponAuth.builder()
         .couponAuthorization(ca)
@@ -80,6 +79,7 @@ public class Basic implements CommandLineRunner {
     }
     categoryRepo.saveAll(categories);
   }
+  @Transactional
   
   private void initCompaniesAndCoupons(List <CouponAuth> couponAuths) {
     List <Company> companies = new ArrayList <>();
@@ -103,8 +103,11 @@ public class Basic implements CommandLineRunner {
         .username(company.getEmail())
         .couponAuths(List.of(couponAuths.get(2)))
           .build();
-      companiesUsers.add(companyUser);
-      companies.add(company);
+      companyRepo.save(company);
+      couponUserRepo.save(companyUser);
+      company.setCouponUser(companyUser);
+//      companiesUsers.add(companyUser);
+//      companies.add(company);
       for (int j = 0; j < COUPONS; j++) {
         Coupon coupon = new Coupon();
         int ranDays = random.nextInt(55) + 5;
@@ -126,9 +129,9 @@ public class Basic implements CommandLineRunner {
         coupons.add(coupon);
       }
     }
-    this.couponUserRepo.saveAll(companiesUsers);
+//    this.couponUserRepo.saveAll(companiesUsers);
     this.couponRepo.saveAll(coupons);
-    this.companyRepo.saveAll(companies);
+//    this.companyRepo.saveAll(companies);
   }
   
   

@@ -7,7 +7,7 @@ public enum CouponAuthorization {
   ROLE_ADMIN,
   ROLE_CUSTOMER,
   ROLE_COMPANY,
-  WRITE,
+  UPDATE,
   GET,
   POST,
   DELETE,
