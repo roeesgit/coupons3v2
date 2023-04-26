@@ -1,7 +1,6 @@
 package com.JbSchool.coupons3.app.utils;
 
 import com.JbSchool.coupons3.app.beans.company.config.*;
-import com.JbSchool.coupons3.app.beans.company.facade.*;
 import com.JbSchool.coupons3.security.entites.users.*;
 import lombok.*;
 import org.springframework.stereotype.*;
@@ -15,16 +14,16 @@ public class CouponAppMapper {
     return this.couponUserRepo.findByUsername(company.getName());
   }
   
-   public Company dtoToCompany(CompanyRespondDto companyRespondDto) {
+   public Company dtoToCompany(UserDto userDto) {
     return  Company.builder()
-      .name(companyRespondDto.getName())
-      .email(companyRespondDto.getEmail())
+      .name(userDto.getName())
+      .email(userDto.getEmail())
       .build();
   }
   
   
-  public CompanyRespondDto companyToDto(Company company) {
-    return CompanyRespondDto.builder()
+  public UserDto companyToDto(Company company) {
+    return UserDto.builder()
       .email(company.getEmail())
       .name(company.getName())
       .build();

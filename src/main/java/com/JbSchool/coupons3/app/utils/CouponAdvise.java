@@ -8,7 +8,7 @@ import java.util.*;
 @RestControllerAdvice
 public class CouponAdvise {
   
-  @ExceptionHandler({CouponException.class,Exception.class})
+  @ExceptionHandler(CouponException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public ErrorMessage companyAdviseHandler(Exception e) {
     ErrorMessage errorMessage = ErrorMessage.builder().build();
@@ -17,7 +17,7 @@ public class CouponAdvise {
     errorMessage.setErrors(errors);
     return errorMessage;
   }
-  
+  //todo return this aster back-end testing
 //
 //  @ExceptionHandler(Exception.class)
 //  @ResponseStatus(HttpStatus.I_AM_A_TEAPOT)
@@ -45,5 +45,5 @@ public class CouponAdvise {
     return errorMessage;  }
 
 
-  
+
 }

@@ -1,5 +1,6 @@
 package com.JbSchool.coupons3.security.entity_validator;
 
+import com.JbSchool.coupons3.app.beans.company.*;
 import com.JbSchool.coupons3.app.beans.company.config.*;
 import com.JbSchool.coupons3.app.beans.coupon.config.*;
 import com.JbSchool.coupons3.app.beans.customer.config.*;
@@ -30,8 +31,10 @@ public class EntityUniqueFieldValidator implements ConstraintValidator <EntityUn
   public boolean isValid(Object value, ConstraintValidatorContext context) {
     switch (this.tableName) {
     case "companies":
+      System.out.println("********* Test 1 **********");
+      Company company = this.companyRepo.findByEmail(((CouponUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
       if (this.columnName.equals("email")) {
-      return !this.companyRepo.existsByEmail(value.toString());
+      return !this.companyRepo.existsByEmailAndIdNot(value.toString(),company.getId());
     } else if (this.columnName.equals("name")) {
       return !this.companyRepo.existsByName(value.toString());
     }

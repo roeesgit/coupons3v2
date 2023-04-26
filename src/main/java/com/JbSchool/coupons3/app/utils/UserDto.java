@@ -1,4 +1,4 @@
-package com.JbSchool.coupons3.app.beans.company.facade;
+package com.JbSchool.coupons3.app.utils;
 
 
 import lombok.*;
@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @Data
-public class CompanyRespondDto {
+public class UserDto {
   private String name;
   private String email;
   

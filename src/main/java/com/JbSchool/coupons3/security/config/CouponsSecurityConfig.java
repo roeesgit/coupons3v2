@@ -24,7 +24,7 @@ public class CouponsSecurityConfig {
         // LOGIN / REGISTER
         reg.requestMatchers("/api/v1/auth/**").permitAll();
         
-        reg.requestMatchers(HttpMethod.PUT,"/api/v1/companies/**").hasAnyAuthority("ROLE_COMPANY");
+        reg.requestMatchers(HttpMethod.PUT,"/api/v1/companies/**").hasAnyAuthority( "ROLE_COMPANY");
         reg.requestMatchers(HttpMethod.GET,"/api/v1/companies/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_COMPANY");
         reg.requestMatchers(  "/api/v1/companies/**").hasAnyAuthority("ROLE_ADMIN");
         

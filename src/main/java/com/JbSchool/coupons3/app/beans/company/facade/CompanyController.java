@@ -3,10 +3,10 @@ package com.JbSchool.coupons3.app.beans.company.facade;
 import com.JbSchool.coupons3.app.beans.company.*;
 import com.JbSchool.coupons3.app.beans.company.config.*;
 import com.JbSchool.coupons3.app.utils.*;
+import com.JbSchool.coupons3.security.auth.*;
 import jakarta.validation.*;
 import lombok.*;
 import org.springframework.http.*;
-import org.springframework.web.bind.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -14,12 +14,13 @@ import java.util.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/companies")
 @CrossOrigin
+
 public class CompanyController {
 
   private final CompanyServiceImpl companyServiceImpl;
   
   @PostMapping
-  public CompanyRespondDto addCompany(@RequestBody @Valid Company company) throws CouponException {
+  public UserDto addCompany(@RequestBody @Valid Company company) throws CouponException {
     return this.companyServiceImpl.addCompany(company);
   }
   
@@ -30,8 +31,8 @@ public class CompanyController {
   }
   
   @PutMapping("/{id}")
-  public void updateCompany(@RequestBody Company company, @PathVariable int id) throws CouponException {
-    this.companyServiceImpl.updateCompany(company,id);
+  public TokenResponseDTO updateCompany(@RequestBody @Valid Company company, @PathVariable int id) throws CouponException {
+    return companyServiceImpl.updateCompany(company,id);
   }
   
   @DeleteMapping("/{id}")
@@ -41,7 +42,7 @@ public class CompanyController {
   
   
   @GetMapping("/{id}")
-  public CompanyRespondDto getSingleCompany(@PathVariable int id) throws CouponException {
+  public UserDto getSingleCompany(@PathVariable int id) throws CouponException {
     return this.companyServiceImpl.getSingleCompany(id);
   }
 }

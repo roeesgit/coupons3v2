@@ -24,15 +24,6 @@ import java.util.*;
     @Enumerated(EnumType.STRING)
     private CouponAuthorization couponAuthorization;
     
-//@ToString.Exclude
-//  @ManyToMany(mappedBy = "couponAuths")
-//  private List <CouponUser> couponUserSet;
-  
-  
-//  @Override
-//  public String getAuthority() {
-//    return couponAuthorization.name();
-//  }
   
   
 }
