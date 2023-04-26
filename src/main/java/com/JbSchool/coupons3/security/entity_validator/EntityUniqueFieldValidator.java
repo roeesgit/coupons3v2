@@ -41,7 +41,7 @@ public class EntityUniqueFieldValidator implements ConstraintValidator <EntityUn
     case "coupons":
       CouponUser couponUser = (CouponUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-      return this.couponRepo.existsByTitleAndCompany_IdNot(value.toString(), couponUser.getId());
+      return this.couponRepo.existsByTitleAndCompanyIdNot(value.toString(), couponUser.getId());
     }
     return false;
   }

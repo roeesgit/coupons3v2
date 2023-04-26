@@ -21,7 +21,7 @@ public class AuthService {
       CouponUser user = this.couponUserService.loadUserByUsername(loginRequestDTO.getUsername());
   
       String token = this.tokenConfig.generateToken(this.tokenConfig
-        .buildClaims(user/*,(List <GrantedAuthority>) user.getAuthorities()*/));
+        .buildClaims(user));
       return new TokenResponseDTO(token);
     }
     return null;
@@ -29,7 +29,6 @@ public class AuthService {
   
   
   private boolean isLoginDetailsValid(LoginRequestDTO loginRequestDTO) {
-    System.out.println(loginRequestDTO.getUsername());
     try {
       this.authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(
