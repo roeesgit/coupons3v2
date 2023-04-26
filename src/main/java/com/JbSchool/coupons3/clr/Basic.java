@@ -5,6 +5,7 @@ import com.JbSchool.coupons3.app.beans.company.config.*;
 import com.JbSchool.coupons3.app.beans.coupon.config.*;
 import com.JbSchool.coupons3.app.beans.customer.config.*;
 import com.JbSchool.coupons3.app.beans.purchase.config.*;
+import com.JbSchool.coupons3.security.config.*;
 import com.JbSchool.coupons3.security.entites.auth.*;
 import com.JbSchool.coupons3.security.entites.users.*;
 import lombok.*;
@@ -21,6 +22,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class Basic implements CommandLineRunner {
   
+  private final CouponUserAuthProvider couponUserAuthProvider;
   private final CouponUserRepo  couponUserRepo;
   private final CouponAuthRepo  couponAuthRepo;
   private final PasswordEncoder passwordEncoder;
@@ -39,19 +41,21 @@ public class Basic implements CommandLineRunner {
     Page <Company> companies = this.companyRepo.findAll(limit);
     
     if (companies.get().findAny().isEmpty()) {
-      List <CouponAuth> couponAuths = initCouponUsersAuth();
+      initCouponUsersAuth();
       CouponUser admin = CouponUser.builder()
         .password(passwordEncoder.encode("admin"))
         .username("admin")
-        .couponAuths(List.of(couponAuths.get(0), couponAuths.get(3), couponAuths.get(4), couponAuths.get(5), couponAuths.get(6), couponAuths.get(7)))
+//        .couponUserAuths(List.of(couponAuths.get(0), couponAuths.get(3), couponAuths.get(4), couponAuths.get(5), couponAuths.get(6), couponAuths.get(7)))
         .build();
+  
       this.couponUserRepo.save(admin);
+      this.couponUserAuthProvider.setAuthForAdmin(admin);
       
       initCategories();
       System.out.println("Categories Done");
-      initCompaniesAndCoupons(couponAuths);
+      initCompaniesAndCoupons();
       System.out.println("Companies and coupons Done");
-      initCustomers(couponAuths);
+      initCustomers();
       System.out.println("Customers Done");
       initPurchases();
       System.out.println("Purchases Done");
@@ -62,15 +66,13 @@ public class Basic implements CommandLineRunner {
   }
   
   
-  private List <CouponAuth> initCouponUsersAuth() {
-    List <CouponAuth> couponAuths = new ArrayList <>();
+  private void initCouponUsersAuth() {
     for (CouponAuthorization ca : CouponAuthorization.values()) {
       CouponAuth couponAuth = CouponAuth.builder()
         .couponAuthorization(ca)
         .build();
-      couponAuths.add(couponAuth);
+      this.couponAuthRepo.save(couponAuth);
     }
-    return this.couponAuthRepo.saveAll(couponAuths);
   }
   
   
@@ -88,18 +90,15 @@ public class Basic implements CommandLineRunner {
   
   @Transactional
   
-  private void initCompaniesAndCoupons(List <CouponAuth> couponAuths) {
-    List <Company> companies = new ArrayList <>();
-    List <CouponUser> companiesUsers = new ArrayList <>();
+  private void initCompaniesAndCoupons() {
     int COMPANIES = 10;
     List <Coupon> coupons = new ArrayList <>();
     int COUPONS = 50;
     for (int i = 0; i < COMPANIES; i++) {
       Company company = new Company();
-      String encodedPassword = passwordEncoder.encode("12345");
       company.setName("Company name " + (i + 1));
       company.setEmail("email(" + (i + 1) + ")@gmail.com");
-      company.setPassword(encodedPassword);
+      company.setPassword(passwordEncoder.encode("12345"));
       if (i == 0) {
         company.setName("TEST");
         company.setEmail("aaaaa");
@@ -108,10 +107,10 @@ public class Basic implements CommandLineRunner {
       CouponUser companyUser = CouponUser.builder()
         .password(company.getPassword())
         .username(company.getEmail())
-        .couponAuths(List.of(couponAuths.get(2), couponAuths.get(3), couponAuths.get(4), couponAuths.get(5), couponAuths.get(6)))
         .build();
-      companiesUsers.add(companyUser);
-      companies.add(company);
+      couponUserRepo.save(companyUser);
+      companyRepo.save(company);
+      this.couponUserAuthProvider.setAuthForCompany(companyUser);
       for (int j = 0; j < COUPONS; j++) {
         Coupon coupon = new Coupon();
         int ranDays = random.nextInt(55) + 5;
@@ -133,15 +132,13 @@ public class Basic implements CommandLineRunner {
         coupons.add(coupon);
       }
     }
-    this.couponUserRepo.saveAll(companiesUsers);
+//    this.couponUserRepo.saveAll(companiesUsers);
     this.couponRepo.saveAll(coupons);
-    this.companyRepo.saveAll(companies);
+//    this.companyRepo.saveAll(companies);
   }
   
   
-  private void initCustomers(List <CouponAuth> couponAuths) {
-    List <Customer> customers = new ArrayList <>();
-    List <CouponUser> customersUsers = new ArrayList <>();
+  private void initCustomers() {
     int CUSTOMERS = 200;
     for (int i = 0; i < CUSTOMERS; i++) {
       Customer customer = new Customer();
@@ -159,13 +156,12 @@ public class Basic implements CommandLineRunner {
       CouponUser customerUser = CouponUser.builder()
         .password(customer.getPassword())
         .username(customer.getEmail())
-        .couponAuths(List.of(couponAuths.get(1), couponAuths.get(4), couponAuths.get(5)))
         .build();
-      customersUsers.add(customerUser);
-      customers.add(customer);
+      this.customerRepo.save(customer);
+      this.couponUserRepo.save(customerUser);
+      this.couponUserAuthProvider.setAuthForCustomer(customerUser);
+  
     }
-    this.couponUserRepo.saveAll(customersUsers);
-    this.customerRepo.saveAll(customers);
   }
   
   

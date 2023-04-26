@@ -14,7 +14,7 @@ import java.util.*;
 @Builder
 @Entity
 @Scope("prototype")
-@Table(name = "coupon_auth")
+@Table(name = "auth")
   public class CouponAuth {
   @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,9 +24,9 @@ import java.util.*;
     @Enumerated(EnumType.STRING)
     private CouponAuthorization couponAuthorization;
     
-@ToString.Exclude
-  @ManyToMany(mappedBy = "couponAuths")
-  private List <CouponUser> couponUserSet;
+//@ToString.Exclude
+//  @ManyToMany(mappedBy = "couponAuths")
+//  private List <CouponUser> couponUserSet;
   
   
 //  @Override

@@ -5,6 +5,7 @@ import com.JbSchool.coupons3.app.beans.company.facade.*;
 import com.JbSchool.coupons3.app.beans.coupon.config.*;
 import com.JbSchool.coupons3.app.utils.*;
 import com.JbSchool.coupons3.security.auth.*;
+import com.JbSchool.coupons3.security.entites.auth.*;
 import com.JbSchool.coupons3.security.entites.users.*;
 import com.JbSchool.coupons3.security.token.*;
 import lombok.*;
@@ -13,26 +14,32 @@ import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 
 import java.util.*;
-@Service @RequiredArgsConstructor @Transactional
+@Service
+@RequiredArgsConstructor
+@Transactional
 public class CompanyServiceImpl implements CompanyService {
   
   
   private final CompanyRepo companyRepo;
-
-  private final CouponService  couponService;
-  private final CouponUserRepo couponUserRepo;
-  private final TokenConfig    tokenConfig;
+  
+  private final CouponService   couponService;
+  private final CouponUserRepo  couponUserRepo;
+  private final TokenConfig     tokenConfig;
   private final CouponAppMapper couponAppMapper;
   private final PasswordEncoder passwordEncoder;
   
   
-  @Override @Transactional
+  @Override
+  @Transactional
   public CompanyRespondDto addCompany(Company company) throws CouponException {
     if (this.companyRepo.existsById(company.getId())) {
-        throw new CouponException(CompanyExceptionProvider.COMPANY_ID_ALREADY_EXIST.getMessage());
+      throw new CouponException(CompanyExceptionProvider.COMPANY_ID_ALREADY_EXIST.getMessage());
     }
     Company persistenceCompany = persistenceAdd(company);
-    return CompanyRespondDto.builder().name(persistenceCompany.getName()).email(persistenceCompany.getEmail()).build();
+    return CompanyRespondDto.builder()
+      .name(persistenceCompany.getName())
+      .email(persistenceCompany.getEmail())
+      .build();
   }
   
   
@@ -42,15 +49,17 @@ public class CompanyServiceImpl implements CompanyService {
     CouponUser couponUser = CouponUser.builder()
       .username(company.getEmail())
       .password(encodedPassword)
-      .build();
+      
+        .build();
     this.companyRepo.save(company);
     this.couponUserRepo.save(couponUser);
     return company;
-
+    
   }
   
   
-  @Override @Transactional
+  @Override
+  @Transactional
   public TokenResponseDTO updateCompany(Company company, int id) throws CouponException {
     Company companyFromDb = this.companyRepo.findById(id)
       .orElseThrow(() -> new CouponException(ErrorMessageProvider.ID_NOT_FOUND.getMessage()));
@@ -60,18 +69,17 @@ public class CompanyServiceImpl implements CompanyService {
 //      throw new CouponException(ErrorMessageProvider.EMAIl_ALREADY_EXIST.getMessage());
 //    }
     return new TokenResponseDTO(tokenConfig.generateToken(tokenConfig.buildClaims(
-      persistenceUpdate(company,companyFromDb))));
+      persistenceUpdate(company, companyFromDb))));
   }
   
   
-  private CouponUser persistenceUpdate(Company company,Company companyFromDb) {
-    String encodedPassword = passwordEncoder.encode(company.getPassword());
+  private CouponUser persistenceUpdate(Company company, Company companyFromDb) {
     company.setName(companyFromDb.getName());
-    company.setPassword(encodedPassword);
+    company.setPassword(passwordEncoder.encode(company.getPassword()));
     company.setId(companyFromDb.getId());
     CouponUser couponUser = couponUserRepo.findByUsername(companyFromDb.getEmail());
     couponUser.setUsername(company.getEmail());
-    couponUser.setPassword(encodedPassword);
+    couponUser.setPassword(company.getPassword());
     this.companyRepo.save(company);
     return couponUser;
   }
@@ -86,6 +94,7 @@ public class CompanyServiceImpl implements CompanyService {
       .email(companyFromDb.getEmail())
       .build();
   }
+  
   
   @Override
   public void deleteCompany(int id) throws CouponException {
