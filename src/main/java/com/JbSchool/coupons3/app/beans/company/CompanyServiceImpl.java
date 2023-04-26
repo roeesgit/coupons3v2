@@ -1,11 +1,8 @@
 package com.JbSchool.coupons3.app.beans.company;
 
 import com.JbSchool.coupons3.app.beans.company.config.*;
-import com.JbSchool.coupons3.app.beans.company.facade.*;
-import com.JbSchool.coupons3.app.beans.coupon.config.*;
 import com.JbSchool.coupons3.app.utils.*;
 import com.JbSchool.coupons3.security.auth.*;
-import com.JbSchool.coupons3.security.entites.auth.*;
 import com.JbSchool.coupons3.security.entites.users.*;
 import com.JbSchool.coupons3.security.token.*;
 import lombok.*;
@@ -22,40 +19,27 @@ public class CompanyServiceImpl implements CompanyService {
   
   private final CompanyRepo companyRepo;
   
-  private final CouponService   couponService;
   private final CouponUserRepo  couponUserRepo;
   private final TokenConfig     tokenConfig;
-  private final CouponAppMapper couponAppMapper;
-  private final PasswordEncoder passwordEncoder;
+  private final PasswordEncoder        passwordEncoder;
+  private final PersistenceCouponUser        persistenceCouponUser;
   
   
   @Override
   @Transactional
-  public CompanyRespondDto addCompany(Company company) throws CouponException {
+  public UserDto addCompany(Company company) throws CouponException {
     if (this.companyRepo.existsById(company.getId())) {
       throw new CouponException(CompanyExceptionProvider.COMPANY_ID_ALREADY_EXIST.getMessage());
     }
-    Company persistenceCompany = persistenceAdd(company);
-    return CompanyRespondDto.builder()
+    Company persistenceCompany = this.persistenceCouponUser.persistenceAddCompany(company);
+    return UserDto.builder()
       .name(persistenceCompany.getName())
       .email(persistenceCompany.getEmail())
       .build();
   }
   
   
-  private Company persistenceAdd(Company company) {
-    String encodedPassword = passwordEncoder.encode(company.getPassword());
-    company.setPassword(encodedPassword);
-    CouponUser couponUser = CouponUser.builder()
-      .username(company.getEmail())
-      .password(encodedPassword)
-      
-        .build();
-    this.companyRepo.save(company);
-    this.couponUserRepo.save(couponUser);
-    return company;
-    
-  }
+ 
   
   
   @Override
@@ -64,32 +48,21 @@ public class CompanyServiceImpl implements CompanyService {
     Company companyFromDb = this.companyRepo.findById(id)
       .orElseThrow(() -> new CouponException(ErrorMessageProvider.ID_NOT_FOUND.getMessage()));
     
-    //todo: apply if spring boot validation failed with update
-//    if (this.companyRepo.existsByEmailAndIdNot(company.getEmail(), id)) {
-//      throw new CouponException(ErrorMessageProvider.EMAIl_ALREADY_EXIST.getMessage());
-//    }
-    return new TokenResponseDTO(tokenConfig.generateToken(tokenConfig.buildClaims(
-      persistenceUpdate(company, companyFromDb))));
+    return new TokenResponseDTO(
+      tokenConfig.generateToken(
+        tokenConfig.buildClaims(
+     this.persistenceCouponUser.persistenceUpdateCompany(
+        company, companyFromDb)
+        )));
   }
   
-  
-  private CouponUser persistenceUpdate(Company company, Company companyFromDb) {
-    company.setName(companyFromDb.getName());
-    company.setPassword(passwordEncoder.encode(company.getPassword()));
-    company.setId(companyFromDb.getId());
-    CouponUser couponUser = couponUserRepo.findByUsername(companyFromDb.getEmail());
-    couponUser.setUsername(company.getEmail());
-    couponUser.setPassword(company.getPassword());
-    this.companyRepo.save(company);
-    return couponUser;
-  }
-  
+
   
   @Override
-  public CompanyRespondDto getSingleCompany(int id) throws CouponException {
+  public UserDto getSingleCompany(int id) throws CouponException {
     Company companyFromDb = this.companyRepo.findById(id).orElseThrow(() -> new CouponException(ErrorMessageProvider.ID_NOT_FOUND.getMessage()));
     
-    return CompanyRespondDto.builder()
+    return UserDto.builder()
       .name(companyFromDb.getName())
       .email(companyFromDb.getEmail())
       .build();
@@ -101,9 +74,8 @@ public class CompanyServiceImpl implements CompanyService {
     if (!this.companyRepo.existsById(id)) {
       throw new CouponException(ErrorMessageProvider.ID_NOT_FOUND.getMessage());
     }
-    CompanyRespondDto company = getSingleCompany(id);
-    this.companyRepo.deleteById(id);
-    this.couponUserRepo.deleteByUsername(company.getEmail());
+    UserDto company = getSingleCompany(id);
+    this.persistenceCouponUser.persistenceDeleteCompany(id, company.getEmail());
   }
   
   
