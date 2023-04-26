@@ -10,7 +10,7 @@ import java.util.*;
 @Service
 
 public class TokenConfig {
-  private String secretKey ="";
+  private final String secretKey;
   
   public TokenConfig(@Value("${couponKey}") String appSecretToken) {
     this.secretKey = appSecretToken;
@@ -28,8 +28,6 @@ public class TokenConfig {
   
   
   public boolean isExpirationTokenValid(String token) {
-    
-    System.out.println(new Date().before(this.getExpirationFromToken(token)));
     return new Date().before(this.getExpirationFromToken(token));
   }
   
@@ -44,7 +42,7 @@ public class TokenConfig {
     }
   }
   
-  public String getUserNameFromToken(String token) throws CouponException {
+  public String getUserNameFromToken(String token) {
     try {
       return Jwts.parser()
         .setSigningKey(secretKey)

@@ -20,12 +20,10 @@ public class Purchase {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
-  
-  @OneToOne
-  private Customer customer;
-  
-  @OneToOne
-  private Coupon coupon;
+  @Column(name = "customer_id")
+  private int customerId;
+  @Column(name = "coupon_id")
+  private int couponId;
   
   
 }

@@ -7,11 +7,9 @@ import java.util.*;
 @Getter
 @Setter
 @Builder
-//@NoArgsConstructor
+@NoArgsConstructor
 public class ErrorMessage {
   
-//  private String header;
-//  private String message;
   private Map <String, String> errors;
   
 }

@@ -1,7 +1,6 @@
 package com.JbSchool.coupons3.app.beans.coupon.config;
 
 import lombok.*;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 @Service @RequiredArgsConstructor
 public class CouponService {
@@ -22,6 +21,6 @@ public class CouponService {
    this.couponRepo.deleteById(id);
   }
   public int countByCompany_Id(int companyId) {
-  return this.couponRepo.countByCompany_Id(companyId);
+  return this.couponRepo.countByCompanyId(companyId);
   }
 }
