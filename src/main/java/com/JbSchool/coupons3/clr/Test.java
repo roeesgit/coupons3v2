@@ -21,11 +21,11 @@ public class Test implements CommandLineRunner {
   
   @Override
   public void run(String... args) {
-           System.out.println("********* CLR 1 **********");
+           System.out.println("********* CLR start **********");
 //    pagination.hh();
-    companyService.getAllCompanies().forEach(System.out::println);
-           System.out.println("********* CLR 2 **********");
-    System.out.println(categoryService.getAllCategories());
+//    companyService.getAllCompanies().forEach(System.out::println);
+//    System.out.println(categoryService.getAllCategories());
+    System.out.println("********* CLR end **********");
 
   }
   
