@@ -42,12 +42,9 @@ public class  CouponUser implements UserDetails {
   
   @Override
   public Collection <? extends GrantedAuthority> getAuthorities() {
-    System.out.println("*********************");
-    System.out.println(this.couponUserAuths);
     List <GrantedAuthority> authorities = new ArrayList <>();
     this.couponUserAuths.forEach(cA-> authorities.add(cA.getCouponAuth().getCouponAuthorization()::name));
     return authorities;
-//    return this.couponAuths;
   }
   
   

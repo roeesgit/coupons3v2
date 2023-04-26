@@ -68,14 +68,13 @@ public class Coupon {
   private LocalDateTime createdDate;
   @LastModifiedDate
   private LocalDateTime lastModifiedDate;
-  @ToString.Exclude
-  @ManyToOne
-  @JoinColumn(name = "company_id")
-  private Company company;
   
-  @ToString.Exclude
-  @OneToMany(mappedBy ="coupon" ,cascade = CascadeType.REMOVE)
-  private List <Purchase> customerCoupons;
+  @Column(name = "company_id")
+  private int companyId;
+  
+//  @ToString.Exclude
+//  @OneToMany(mappedBy ="coupon" ,cascade = CascadeType.REMOVE)
+//  private List <Purchase> customerCoupons;
   
   
 }

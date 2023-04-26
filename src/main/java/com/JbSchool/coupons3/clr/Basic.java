@@ -11,6 +11,7 @@ import com.JbSchool.coupons3.security.entites.users.*;
 import lombok.*;
 import org.springframework.boot.*;
 import org.springframework.data.domain.*;
+import org.springframework.security.core.context.*;
 import org.springframework.security.crypto.password.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
@@ -37,6 +38,8 @@ public class Basic implements CommandLineRunner {
   
   @Override
   public void run(String... args) {
+  
+    
     Pageable limit = PageRequest.of(0, 1);
     Page <Company> companies = this.companyRepo.findAll(limit);
     
@@ -97,7 +100,7 @@ public class Basic implements CommandLineRunner {
     for (int i = 0; i < COMPANIES; i++) {
       Company company = new Company();
       company.setName("Company name " + (i + 1));
-      company.setEmail("email(" + (i + 1) + ")@gmail.com");
+      company.setEmail("email" + (i + 1) + "gmail.com");
       company.setPassword(passwordEncoder.encode("12345"));
       if (i == 0) {
         company.setName("TEST");
@@ -116,7 +119,7 @@ public class Basic implements CommandLineRunner {
         int ranDays = random.nextInt(55) + 5;
         coupon.setAmount(random.nextInt(80) + 20);
         coupon.setEndDate(LocalDate.now().plus(4, ChronoUnit.MONTHS).plusDays(ranDays));
-        coupon.setCompany(Company.builder().id(i + 1).build());
+        coupon.setCompanyId(company.getId());
         coupon.setCategory(CategoryProvider.values()[(random.nextInt(CategoryProvider.values().length - 1) + 1)]);
         coupon.setTitle("title " + (j + 1));
         coupon.setDescription("description " + (j + 1));
@@ -141,11 +144,12 @@ public class Basic implements CommandLineRunner {
   private void initCustomers() {
     int CUSTOMERS = 200;
     for (int i = 0; i < CUSTOMERS; i++) {
-      Customer customer = new Customer();
-      customer.setFirstName("first name " + (i + 1));
-      customer.setLastName("last name " + (i + 1));
-      customer.setEmail("email(" + (i + 1) + ")@gmail.com");
-      customer.setPassword(this.passwordEncoder.encode("12345"));
+      Customer customer = Customer.builder()
+        .firstName("first name " + (i + 1))
+        .lastName("last name " + (i + 1))
+        .email("email" + (i + 1) + "@gmail.com")
+        .password(this.passwordEncoder.encode("12345"))
+        .build();
       if (i == 0) {
         customer.setFirstName("TEST");
         customer.setLastName("Testy");
@@ -172,8 +176,8 @@ public class Basic implements CommandLineRunner {
     int PURCHASES = 1000;
     for (int i = 0; i < PURCHASES; i++) {
       Purchase purchase = new Purchase();
-      purchase.setCoupon(coupons.get(random.nextInt(coupons.size())));
-      purchase.setCustomer(customers.get(random.nextInt(customers.size())));
+      purchase.setCouponId(coupons.get(random.nextInt(coupons.size())).getId());
+      purchase.setCustomerId(customers.get(random.nextInt(customers.size())).getId());
       purchases.add(purchase);
     }
     this.purchaseRepo.saveAll(purchases);

@@ -5,10 +5,11 @@ import org.springframework.stereotype.*;
 @Repository
 public interface CouponRepo extends JpaRepository< Coupon,Integer> {
   
-  int countByCompany_Id(int id);
+  
+  int countByCompanyId(int id);
   
   
-  boolean existsByTitleAndCompany_IdNot(String title, int id);
+  boolean existsByTitleAndCompanyIdNot(String title, int id);
   
   
   

@@ -28,22 +28,22 @@ public class CouponAdvise {
 //    errorMessage.setErrors(errors);
 //    return errorMessage;
 //  }
-//  @ExceptionHandler(MethodArgumentNotValidException.class)
-//  @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-//  public ErrorMessage entityValidationHandler(MethodArgumentNotValidException e ){
-//    ErrorMessage errorMessage = ErrorMessage.builder().build();
-//    Map <String, String> errors = new HashMap <>();
-//    if (e.getBindingResult().getFieldErrors().size() < 1) {
-//      errors.put("Entity error", "email or name already exist");
-//    } else {
-//
-//      e.getBindingResult().getFieldErrors().forEach(error->
-//        errors.put(error.getField(), error.getDefaultMessage())
-//      );
-//    }
-//    errorMessage.setErrors(errors);
-//    return errorMessage;  }
-//
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+  public ErrorMessage entityValidationHandler(MethodArgumentNotValidException e ){
+    ErrorMessage errorMessage = ErrorMessage.builder().build();
+    Map <String, String> errors = new HashMap <>();
+    if (e.getBindingResult().getFieldErrors().size() < 1) {
+      errors.put("Entity error", "email or name already exist");
+    } else {
+
+      e.getBindingResult().getFieldErrors().forEach(error->
+        errors.put(error.getField(), error.getDefaultMessage())
+      );
+    }
+    errorMessage.setErrors(errors);
+    return errorMessage;  }
+
 
   
 }

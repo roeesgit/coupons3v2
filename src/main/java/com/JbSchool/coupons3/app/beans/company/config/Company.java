@@ -35,24 +35,29 @@ public class Company {
   private int id;
   
   @Column(name = "name", nullable = false)
-  @Pattern(regexp = "[^as]",message = "No test allow???")
+  @Pattern(regexp = "^(?![fuck]).*$",message = "No fu#@ allowed!")
   @Length(min = 3, max = 15, message = "Please provide a valid user name between 3-15 char")
   @EntityUniqueFieldConfig(tableName = "companies", columnName = "name",
     message = "Name must be unique")
   private String name;
   
-  // todo - check Flag.CASE_INSENSITIVE
   @Email(message = "Please provide a valid email address")
-  @Pattern(regexp = ".+@.+\\..+", message = "Please provide a valid email address"
-    , flags = Pattern.Flag.CASE_INSENSITIVE)
+  @Pattern(regexp = ".+@.+\\..+", message = "Please provide a valid email address")
   @EntityUniqueFieldConfig(tableName = "companies", columnName = "email",
     message = "Email must be unique")
   @Column(name = "email", nullable = false)
   private String email;
   
-  @Pattern(regexp = "(?=.*[A-Z])(?=.*[a-z])(?=.*[/d])(?=.*[!@#$%^&*])(?=.{8,})",
-    message = "Password must contain at least one uppercase letter, one lowercase letter," +
-      "one digit, one special character, and be at least 8 characters long")
+  @Pattern(
+    regexp = "^(?=.*\\d)(?=.*[a-z])(?=[A-Z])(?=.*[@#$%^&+=])(?!.*\\s).{8,}.*$"
+    ,message =
+    "Password must contain at least one digit" +
+      ", at least one lowercase letter" +
+      ", at least one uppercase letter" +
+      ", at least one special character" +
+      ", must not contain spaces" +
+      ", and must be at least 8 characters long" +
+      "")
   @Column(name = "password")
   private String password;
   
@@ -62,10 +67,10 @@ public class Company {
   @LastModifiedDate
   private LocalDateTime lastModifiedDate;
   
-  @JsonIgnore
-  @ToString.Exclude
-  @OneToMany(mappedBy = "company", cascade = {CascadeType.REMOVE})
-  private List <Coupon> coupons;
+//  @JsonIgnore
+//  @ToString.Exclude
+//  @OneToMany(mappedBy = "company", cascade = {CascadeType.REMOVE})
+//  private List <Coupon> coupons;
   
 
   

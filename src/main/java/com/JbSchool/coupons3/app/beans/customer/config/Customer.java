@@ -44,6 +44,16 @@ public class Customer {
   @Column(name = "email", nullable = false)
   private String email;
   
+  @Pattern(
+    regexp = "^(?=.*\\d)(?=.*[a-z])(?=[A-Z])(?=.*[@#$%^&+=])(?!.*\\s).{8,}.*$"
+    ,message =
+    "Password must contain at least one digit" +
+      ", at least one lowercase letter" +
+      ", at least one uppercase letter" +
+      ", at least one special character" +
+      ", must not contain spaces" +
+      ", and must be at least 8 characters long" +
+      "")
   @Column(name = "password", nullable = false)
   private String password;
   
@@ -53,9 +63,9 @@ public class Customer {
   @LastModifiedDate
   private LocalDateTime lastModifiedDate;
   
-  @ToString.Exclude
-  @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "customer")
-  private List <Purchase> customerCoupons;
+//  @ToString.Exclude
+//  @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "customer")
+//  private List <Purchase> customerCoupons;
   
   
 }

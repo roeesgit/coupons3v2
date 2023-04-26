@@ -7,6 +7,7 @@ import org.springframework.http.*;
 import org.springframework.security.config.annotation.web.builders.*;
 import org.springframework.security.config.http.*;
 import org.springframework.security.web.*;
+import org.springframework.security.web.access.channel.*;
 import org.springframework.security.web.authentication.*;
 @Configuration
 @AllArgsConstructor

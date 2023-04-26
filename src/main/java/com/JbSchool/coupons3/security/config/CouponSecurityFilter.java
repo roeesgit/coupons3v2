@@ -9,8 +9,11 @@ import org.springframework.security.authentication.*;
 import org.springframework.security.core.context.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.filter.*;
+import org.springframework.web.util.*;
 
 import java.io.*;
+import java.nio.charset.*;
+import java.util.*;
 @Component @AllArgsConstructor
 public class CouponSecurityFilter extends OncePerRequestFilter {
   
@@ -20,34 +23,26 @@ public class CouponSecurityFilter extends OncePerRequestFilter {
   
   @SneakyThrows
   @Override
-  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
     String authHeader = request.getHeader("Authorization");
     if (authHeader != null && authHeader.startsWith("Bearer")) {
       String token = authHeader.substring(7);
-      boolean isExpirationValid1 = this.tokenConfig.isExpirationTokenValid(token);
-      System.out.println(isExpirationValid1);
       String userName = this.tokenConfig.getUserNameFromToken(token);
       if (userName != null) {
         boolean isExpirationValid = this.tokenConfig.isExpirationTokenValid(token);
-        System.out.print(" ,exp token: " +isExpirationValid);
         if (isExpirationValid) {
-          CouponUser couponUser = (CouponUser) this.couponUserService.loadUserByUsername(userName);
-          System.out.println(couponUser);
+          CouponUser couponUser = this.couponUserService.loadUserByUsername(userName);
           if (couponUser != null) {
             UsernamePasswordAuthenticationToken auth =
               new UsernamePasswordAuthenticationToken(
                 couponUser, null,couponUser.getAuthorities()
               );
-            System.out.println("auth "+auth);
             SecurityContextHolder.getContext().setAuthentication(auth);
           }
         }
       }
     }
     filterChain.doFilter(request, response);
-    
-    
-    
   }
   
   
