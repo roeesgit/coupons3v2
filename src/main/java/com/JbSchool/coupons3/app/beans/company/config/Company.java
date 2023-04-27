@@ -1,10 +1,6 @@
 package com.JbSchool.coupons3.app.beans.company.config;
 
-import com.JbSchool.coupons3.app.beans.coupon.config.*;
-
-import com.JbSchool.coupons3.security.entites.users.*;
-import com.JbSchool.coupons3.security.entity_validator.*;
-import com.fasterxml.jackson.annotation.*;
+import com.JbSchool.coupons3.entity_validator.*;
 import jakarta.persistence.*;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
@@ -16,7 +12,6 @@ import org.springframework.data.annotation.*;
 import org.springframework.data.jpa.domain.support.*;
 
 import java.time.*;
-import java.util.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,6 +27,7 @@ public class Company {
   
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @EntityUniqueFieldConfig(tableName = "companies",columnName = "id" , message = "Id already exist")
   private int id;
   
   @Column(name = "name", nullable = false)

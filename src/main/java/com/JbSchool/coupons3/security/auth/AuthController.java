@@ -13,12 +13,12 @@ public class AuthController {
     private final CouponUserService couponUserService;
 
     @PostMapping("/login")
-    public TokenResponseDTO login(@RequestBody LoginRequestDTO loginRequestDTO) {
+    public TokenDTO login(@RequestBody LoginRequestDTO loginRequestDTO) {
         return this.authService.validateLoginDetails(loginRequestDTO);
     }
 
     @PostMapping("/registration")
-    public TokenResponseDTO registration(@RequestBody CouponUser user) throws Exception {
+    public TokenDTO registration(@RequestBody CouponUser user) throws Exception {
         return this.couponUserService.addUser(user);
     }
 

@@ -1,7 +1,7 @@
 package com.JbSchool.coupons3.app.beans.company.facade;
 
-import com.JbSchool.coupons3.app.beans.company.*;
 import com.JbSchool.coupons3.app.beans.company.config.*;
+import com.JbSchool.coupons3.app.dto.*;
 import com.JbSchool.coupons3.app.utils.*;
 import com.JbSchool.coupons3.security.auth.*;
 import jakarta.validation.*;
@@ -31,8 +31,8 @@ public class CompanyController {
   }
   
   @PutMapping("/{id}")
-  public TokenResponseDTO updateCompany(@RequestBody @Valid Company company, @PathVariable int id) throws CouponException {
-    return companyServiceImpl.updateCompany(company,id);
+  public TokenDTO updateCompany(@RequestBody @Valid Company company, @PathVariable int id) throws CouponException {
+    return companyServiceImpl.updateCompany(company);
   }
   
   @DeleteMapping("/{id}")

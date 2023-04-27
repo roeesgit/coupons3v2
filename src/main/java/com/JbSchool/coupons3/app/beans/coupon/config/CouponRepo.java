@@ -12,5 +12,7 @@ public interface CouponRepo extends JpaRepository< Coupon,Integer> {
   boolean existsByTitleAndCompanyIdNot(String title, int id);
   
   
+  boolean existsByCompanyId(int companyIdFromSCH);
+  
   
 }

@@ -1,4 +1,4 @@
-package com.JbSchool.coupons3.app.utils;
+package com.JbSchool.coupons3.app.dto;
 
 
 import lombok.*;

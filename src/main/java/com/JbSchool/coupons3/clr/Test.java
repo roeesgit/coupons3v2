@@ -1,7 +1,6 @@
 package com.JbSchool.coupons3.clr;
 
 import com.JbSchool.coupons3.app.beans.category.*;
-import com.JbSchool.coupons3.app.beans.company.*;
 import com.JbSchool.coupons3.app.beans.company.config.*;
 import com.JbSchool.coupons3.app.beans.coupon.*;
 import lombok.*;

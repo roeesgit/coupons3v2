@@ -1,4 +1,4 @@
-package com.JbSchool.coupons3.app.utils;
+package com.JbSchool.coupons3.app.dto;
 
 import com.JbSchool.coupons3.app.beans.category.*;
 import jakarta.persistence.*;
@@ -14,6 +14,7 @@ public class CouponDto {
   @Enumerated(EnumType.STRING)
   private CategoryProvider category;
   
+  private String    title;
   private String    description;
   private LocalDate endDate;
   private int       amount;

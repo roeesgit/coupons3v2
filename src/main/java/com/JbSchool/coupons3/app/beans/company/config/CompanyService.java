@@ -1,5 +1,6 @@
 package com.JbSchool.coupons3.app.beans.company.config;
 
+import com.JbSchool.coupons3.app.dto.*;
 import com.JbSchool.coupons3.app.utils.*;
 import com.JbSchool.coupons3.security.auth.*;
 
@@ -9,7 +10,7 @@ public interface CompanyService {
   UserDto addCompany(Company company) throws CouponException;
   
   
-  TokenResponseDTO updateCompany(Company company, int id) throws CouponException;
+  TokenDTO updateCompany(Company company) throws CouponException;
   
   
   UserDto getSingleCompany(int id) throws CouponException;

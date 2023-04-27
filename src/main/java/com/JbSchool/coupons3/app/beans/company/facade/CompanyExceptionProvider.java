@@ -1,4 +1,4 @@
-package com.JbSchool.coupons3.app.beans.company.config;
+package com.JbSchool.coupons3.app.beans.company.facade;
 
 import lombok.*;
 @RequiredArgsConstructor @Getter

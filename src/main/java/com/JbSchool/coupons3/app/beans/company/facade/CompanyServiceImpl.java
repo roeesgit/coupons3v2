@@ -1,6 +1,7 @@
-package com.JbSchool.coupons3.app.beans.company;
+package com.JbSchool.coupons3.app.beans.company.facade;
 
 import com.JbSchool.coupons3.app.beans.company.config.*;
+import com.JbSchool.coupons3.app.dto.*;
 import com.JbSchool.coupons3.app.utils.*;
 import com.JbSchool.coupons3.security.auth.*;
 import com.JbSchool.coupons3.security.entites.users.*;
@@ -19,23 +20,15 @@ public class CompanyServiceImpl implements CompanyService {
   
   private final CompanyRepo companyRepo;
   
-  private final CouponUserRepo  couponUserRepo;
-  private final TokenConfig     tokenConfig;
-  private final PasswordEncoder        passwordEncoder;
   private final PersistenceCouponUser        persistenceCouponUser;
+  private final Mapper        mapper;
   
   
   @Override
   @Transactional
   public UserDto addCompany(Company company) throws CouponException {
-    if (this.companyRepo.existsById(company.getId())) {
-      throw new CouponException(CompanyExceptionProvider.COMPANY_ID_ALREADY_EXIST.getMessage());
-    }
     Company persistenceCompany = this.persistenceCouponUser.persistenceAddCompany(company);
-    return UserDto.builder()
-      .name(persistenceCompany.getName())
-      .email(persistenceCompany.getEmail())
-      .build();
+    return this.mapper.companyToUserDto(persistenceCompany);
   }
   
   
@@ -44,16 +37,12 @@ public class CompanyServiceImpl implements CompanyService {
   
   @Override
   @Transactional
-  public TokenResponseDTO updateCompany(Company company, int id) throws CouponException {
-    Company companyFromDb = this.companyRepo.findById(id)
+  public TokenDTO updateCompany(Company company) throws CouponException {
+    Company companyFromDb = this.companyRepo.findById(this.mapper.companyIdFromSCH())
       .orElseThrow(() -> new CouponException(ErrorMessageProvider.ID_NOT_FOUND.getMessage()));
-    
-    return new TokenResponseDTO(
-      tokenConfig.generateToken(
-        tokenConfig.buildClaims(
-     this.persistenceCouponUser.persistenceUpdateCompany(
-        company, companyFromDb)
-        )));
+    CouponUser persistenceCompany = this.persistenceCouponUser.persistenceUpdateCompany(company,companyFromDb);
+  
+    return this.mapper.companyToTokenDTO(persistenceCompany);
   }
   
 
@@ -61,11 +50,7 @@ public class CompanyServiceImpl implements CompanyService {
   @Override
   public UserDto getSingleCompany(int id) throws CouponException {
     Company companyFromDb = this.companyRepo.findById(id).orElseThrow(() -> new CouponException(ErrorMessageProvider.ID_NOT_FOUND.getMessage()));
-    
-    return UserDto.builder()
-      .name(companyFromDb.getName())
-      .email(companyFromDb.getEmail())
-      .build();
+    return this.mapper.companyToUserDto(companyFromDb);
   }
   
   

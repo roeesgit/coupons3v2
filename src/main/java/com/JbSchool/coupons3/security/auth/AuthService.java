@@ -15,14 +15,14 @@ public class AuthService {
   private final CouponUserService couponUserService;
   
   
-  public TokenResponseDTO validateLoginDetails(LoginRequestDTO loginRequestDTO) {
+  public TokenDTO validateLoginDetails(LoginRequestDTO loginRequestDTO) {
     boolean isLoginDetailsValid = this.isLoginDetailsValid(loginRequestDTO);
     if (isLoginDetailsValid) {
       CouponUser user = this.couponUserService.loadUserByUsername(loginRequestDTO.getUsername());
   
       String token = this.tokenConfig.generateToken(this.tokenConfig
         .buildClaims(user));
-      return new TokenResponseDTO(token);
+      return new TokenDTO(token);
     }
     return null;
   }

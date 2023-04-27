@@ -1,4 +1,4 @@
-package com.JbSchool.coupons3.security.entity_validator;
+package com.JbSchool.coupons3.entity_validator;
 
 import jakarta.validation.*;
 

@@ -1,8 +1,6 @@
 package com.JbSchool.coupons3.app.beans.customer.config;
 
-import com.JbSchool.coupons3.app.beans.purchase.config.*;
-
-import com.JbSchool.coupons3.security.entity_validator.*;
+import com.JbSchool.coupons3.entity_validator.*;
 import jakarta.persistence.*;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.*;
@@ -13,7 +11,6 @@ import org.springframework.data.annotation.*;
 import org.springframework.data.jpa.domain.support.*;
 
 import java.time.*;
-import java.util.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
