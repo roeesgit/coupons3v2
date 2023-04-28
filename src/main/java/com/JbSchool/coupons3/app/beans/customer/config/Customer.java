@@ -26,6 +26,7 @@ public class Customer {
   
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @EntityUniqueFieldConfig(tableName = "customers",columnName = "id" , message = "Id already exist")
   private int id;
   
   @Length(min = 3, max = 15, message = "Please provide a valid first name between 2-15 char")
@@ -56,6 +57,7 @@ public class Customer {
   
 
   @CreatedDate
+  @Column(updatable = false)
   private LocalDateTime createdDate;
   @LastModifiedDate
   private LocalDateTime lastModifiedDate;

@@ -30,12 +30,12 @@ public class Company {
   @EntityUniqueFieldConfig(tableName = "companies",columnName = "id" , message = "Id already exist")
   private int id;
   
-  @Column(name = "name", nullable = false)
-  @Pattern(regexp = "^(?![fuck]).*$",message = "No fu#@ allowed!")
+  @Column(updatable = false, name = "name", nullable = false)
+//  @Pattern(regexp = "^(?![fuck]).*$",message = "No fu#@ allowed!")
   @Length(min = 3, max = 15, message = "Please provide a valid user name between 3-15 char")
   @EntityUniqueFieldConfig(tableName = "companies", columnName = "name",
     message = "Name must be unique")
-  private String name;
+  private  String name;
   
   @Email(message = "Please provide a valid email address")
   @Pattern(regexp = ".+@.+\\..+", message = "Please provide a valid email address")
@@ -59,6 +59,7 @@ public class Company {
   
  
   @CreatedDate
+  @Column(updatable = false)
   private LocalDateTime createdDate;
   @LastModifiedDate
   private LocalDateTime lastModifiedDate;

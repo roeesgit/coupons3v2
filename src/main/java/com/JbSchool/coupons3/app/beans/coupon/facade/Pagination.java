@@ -1,4 +1,4 @@
-package com.JbSchool.coupons3.app.beans.coupon;
+package com.JbSchool.coupons3.app.beans.coupon.facade;
 
 import com.JbSchool.coupons3.app.beans.coupon.config.*;
 import lombok.*;

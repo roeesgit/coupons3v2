@@ -1,48 +1,116 @@
 package com.JbSchool.coupons3.app.utils;
 
 import com.JbSchool.coupons3.app.beans.company.config.*;
+import com.JbSchool.coupons3.app.beans.coupon.config.*;
+import com.JbSchool.coupons3.app.beans.customer.config.*;
+import com.JbSchool.coupons3.app.beans.purchase.config.*;
 import com.JbSchool.coupons3.security.config.*;
 import com.JbSchool.coupons3.security.entites.users.*;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.crypto.password.*;
 import org.springframework.stereotype.*;
-@Component @RequiredArgsConstructor
+import org.springframework.transaction.annotation.*;
+@Component
+@RequiredArgsConstructor
 public class PersistenceCouponUser {
-  private final PasswordEncoder passwordEncoder;
-  private final   CompanyRepo            companyRepo;
-  private final CouponUserAuthProvider couponUserAuthProvider;
   
-  private final CouponUserRepo  couponUserRepo;
-  public Company persistenceAddCompany(Company company) {
-    company.setPassword(passwordEncoder.encode(company.getPassword()));
-    CouponUser couponUser = CouponUser.builder()
-      .username(company.getEmail())
-      .password(company.getPassword())
+  private final PasswordEncoder        passwordEncoder;
+  private final CompanyRepo            companyRepo;
+  private final CustomerRepo customerRepo;
+  private final CouponRepo   couponRepo;
+  private final PurchaseRepo purchaseRepo;
+  private final CouponUserAuthProvider couponUserAuthProvider;
+  private final EntityManager          entityManager;
+  
+  private final CouponUserRepo couponUserRepo;
+  
+  
+  //  @Transactional
+  public Company addCompany(Company company) {
+    entityManager.getTransaction().begin();
+    try {
       
-      .build();
-    this.companyRepo.save(company);
-    this.couponUserRepo.save(couponUser);
-    this.couponUserAuthProvider.setAuthForCompany(couponUser);
+      company.setPassword(passwordEncoder.encode(company.getPassword()));
+      CouponUser couponUser = CouponUser.builder()
+        .username(company.getEmail())
+        .password(company.getPassword())
+        
+        .build();
+      // TODO: 11/22/2022 test
+      System.out.println("********* Test 1 **********");
+      this.companyRepo.save(company);
+      System.out.println("********* Test 2 **********");
+      this.couponUserRepo.save(couponUser);
+      System.out.println("********* Test 3 **********");
+      this.couponUserAuthProvider.setAuthForCompany(couponUser);
+      System.out.println("********* Test 5 **********");
+      entityManager.getTransaction().commit();
+      System.out.println(entityManager.getTransaction().isActive());
+    } catch (Exception e) {
+      entityManager.getTransaction().rollback();
+    }
     return company;
     
   }
   
   
-  public CouponUser persistenceUpdateCompany(Company company, Company companyFromDb) {
-    company.setName(companyFromDb.getName());
+  @Transactional
+  public Company updateCompany(Company company, Company companyFromDb) {
+    
     company.setPassword(passwordEncoder.encode(company.getPassword()));
     company.setId(companyFromDb.getId());
     CouponUser couponUser = couponUserRepo.findByUsername(companyFromDb.getEmail());
     couponUser.setUsername(company.getEmail());
     couponUser.setPassword(company.getPassword());
     this.companyRepo.save(company);
-    return couponUser;
+    return company;
   }
   
   
-  public void persistenceDeleteCompany(int id, String email) {
+  @Transactional
+  public void deleteCompany(int id, String email) {
     this.companyRepo.deleteById(id);
     this.couponUserRepo.deleteByUsername(email);
+    
+    int couponsDeleted =  this.couponRepo.deleteByCompanyId(id);
+    System.out.println("couponsDeleted "+couponsDeleted);
+    int purchaseDeleted = this.purchaseRepo.deleteCompanyCouponsPurchases(id);
+  }
+  
+  
+  @Transactional
+  public Customer addCustomer(Customer customer) {
+    customer.setPassword(passwordEncoder.encode(customer.getPassword()));
+    CouponUser couponUser = CouponUser.builder()
+      .username(customer.getEmail())
+      .password(customer.getPassword())
+      
+      .build();
+    this.customerRepo.save(customer);
+    this.couponUserRepo.save(couponUser);
+    this.couponUserAuthProvider.setAuthForCustomer(couponUser);
+    return customer;
+    
+  }
+  
+  
+  public Customer updateCustomer(Customer customer, Customer customerFromDb) {
+    customer.setPassword(passwordEncoder.encode(customer.getPassword()));
+    customer.setId(customerFromDb.getId());
+    CouponUser couponUser = couponUserRepo.findByUsername(customerFromDb.getEmail());
+    couponUser.setUsername(customer.getEmail());
+    couponUser.setPassword(customer.getPassword());
+    this.customerRepo.save(customer);
+    return customer;
+  }
+  
+  
+  public void deleteCustomer(String username, int customerId) {
+    this.customerRepo.deleteById(customerId);
+    this.couponUserRepo.deleteByUsername(username);
+    int purchaseDeleted = this.purchaseRepo.deleteByCustomerId(customerId);
+    System.out.println("purchaseDeleted "+purchaseDeleted);
   }
   
   

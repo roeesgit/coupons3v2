@@ -2,18 +2,19 @@ package com.JbSchool.coupons3.clr;
 
 import com.JbSchool.coupons3.app.beans.category.*;
 import com.JbSchool.coupons3.app.beans.company.config.*;
-import com.JbSchool.coupons3.app.beans.coupon.*;
+import com.JbSchool.coupons3.app.beans.coupon.facade.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.*;
 import org.springframework.stereotype.*;
 @Component
-@RequiredArgsConstructor
+
 public class Test implements CommandLineRunner {
   
-  private  final Pagination      pagination;
-  private  final CategoryService    categoryService;
-  
+  @Autowired
+  private   Pagination      pagination;
+  @Autowired
+  private   CategoryService categoryService;
   @Autowired
   @Qualifier("companyServiceImpl")
   private  CompanyService companyService;
@@ -21,7 +22,9 @@ public class Test implements CommandLineRunner {
   @Override
   public void run(String... args) {
            System.out.println("********* CLR start **********");
-//    pagination.hh();
+     // TODO: 11/22/2022 test
+           System.out.println("********* pagination **********");
+    pagination.hh();
 //    companyService.getAllCompanies().forEach(System.out::println);
 //    System.out.println(categoryService.getAllCategories());
     System.out.println("********* CLR end **********");

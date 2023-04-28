@@ -8,22 +8,15 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/auth")
 public class AuthController {
-
+    
     private final AuthService       authService;
     private final CouponUserService couponUserService;
-
+    
+    
     @PostMapping("/login")
     public TokenDTO login(@RequestBody LoginRequestDTO loginRequestDTO) {
         return this.authService.validateLoginDetails(loginRequestDTO);
     }
-
-    @PostMapping("/registration")
-    public TokenDTO registration(@RequestBody CouponUser user) throws Exception {
-        return this.couponUserService.addUser(user);
-    }
-
-//    @PostMapping
-//    public Company addCompany(@RequestBody Company company) {
-//        return //...
-//    }
+    
+    
 }

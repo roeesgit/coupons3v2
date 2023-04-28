@@ -6,12 +6,14 @@ public interface CompanyRepo extends JpaRepository< Company,Integer> {
   
 
   List <Company> findAll();
-  boolean existsByName(String name);
-  boolean existsByEmail(String email);
   
   boolean existsByEmailAndIdNot(String email, int id);
   
   Company findByEmail(String username);
+  
+  
+  boolean existsByNameAndIdNot(String toString,int id);
+  
   
   
 }

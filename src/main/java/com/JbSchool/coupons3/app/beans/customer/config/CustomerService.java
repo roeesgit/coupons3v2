@@ -1,25 +1,23 @@
 package com.JbSchool.coupons3.app.beans.customer.config;
 
-import lombok.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.stereotype.*;
-@Service
-@RequiredArgsConstructor
-public class CustomerService {
+import com.JbSchool.coupons3.app.dto.*;
+import com.JbSchool.coupons3.app.utils.*;
+
+import java.util.*;
+public interface CustomerService {
   
-  private final CustomerRepo customerRepo;
+  UserDto addCustomer(Customer customer);
+  
+  void updateCustomer(Customer customer, int id) throws CouponException;
+  
+  UserDto getCustomer(int id) throws CouponException;
+  
+  void deleteCustomer(int id) throws CouponException;
   
   
-  public Customer addCustomer(Customer customer) {
-   return this.customerRepo.save(customer);
-  }
-  public void updateCustomer(Customer customer,int id) {
-   this.customerRepo.save(customer);
-  }
-  public Customer getCustomer(int id) {
-   return this.customerRepo.findById(id).orElseThrow();
-  }
-  public void removeCustomer(int id) {
-   this.customerRepo.deleteById(id);
-  }
+  List <UserDto> getAllCustomers();
+  
+  UserDto getLoggedCustomer() throws CouponException;
+  
+  
 }
