@@ -64,11 +64,4 @@ public class Company {
   @LastModifiedDate
   private LocalDateTime lastModifiedDate;
   
-//  @JsonIgnore
-//  @ToString.Exclude
-//  @OneToMany(mappedBy = "company", cascade = {CascadeType.REMOVE})
-//  private List <Coupon> coupons;
-  
-
-  
 }
