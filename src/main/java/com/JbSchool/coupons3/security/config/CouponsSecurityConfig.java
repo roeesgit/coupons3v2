@@ -43,6 +43,7 @@ public class CouponsSecurityConfig {
         })
       .addFilterBefore(couponSecurityFilter, UsernamePasswordAuthenticationFilter.class)
       .formLogin().disable()
+      .cors().and()
       .csrf().disable()
       .build();
   }

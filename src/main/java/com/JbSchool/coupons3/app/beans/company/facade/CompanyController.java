@@ -12,8 +12,6 @@ import java.util.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/companies")
-@CrossOrigin
-
 public class CompanyController {
 
   private final CompanyServiceImpl companyServiceImpl;
