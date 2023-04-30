@@ -24,7 +24,7 @@ public class CompanyServiceImpl implements CompanyService {
   
   
   @Override
-  @Transactional
+//  @Transactional
   public UserDto addCompany(Company company) {
     Company persistenceCompany = this.persistenceCouponUser.addCompany(company);
     return this.mapper.companyToUserDto(persistenceCompany);
@@ -42,6 +42,7 @@ public class CompanyServiceImpl implements CompanyService {
   
   
   @Override
+  @Transactional
   public void deleteCompany(int id) throws CouponException {
     Company company = this.couponExcValidator.getOptionalCompany(id);
     this.persistenceCouponUser.deleteCompany(id, company.getEmail());

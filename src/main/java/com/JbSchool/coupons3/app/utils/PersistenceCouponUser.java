@@ -21,15 +21,16 @@ public class PersistenceCouponUser {
   private final CouponRepo   couponRepo;
   private final PurchaseRepo purchaseRepo;
   private final CouponUserAuthProvider couponUserAuthProvider;
-  private final EntityManager          entityManager;
+//  @PersistenceContext
+//  private final EntityManager          entityManager;
   
   private final CouponUserRepo couponUserRepo;
   
   
   //  @Transactional
   public Company addCompany(Company company) {
-    entityManager.getTransaction().begin();
-    try {
+   //todo entityManager.getTransaction().begin();
+//    try {
       
       company.setPassword(passwordEncoder.encode(company.getPassword()));
       CouponUser couponUser = CouponUser.builder()
@@ -45,11 +46,11 @@ public class PersistenceCouponUser {
       System.out.println("********* Test 3 **********");
       this.couponUserAuthProvider.setAuthForCompany(couponUser);
       System.out.println("********* Test 5 **********");
-      entityManager.getTransaction().commit();
-      System.out.println(entityManager.getTransaction().isActive());
-    } catch (Exception e) {
-      entityManager.getTransaction().rollback();
-    }
+//      entityManager.getTransaction().commit();
+//      System.out.println(entityManager.getTransaction().isActive());
+//    } catch (Exception e) {
+//      entityManager.getTransaction().rollback();
+//    }
     return company;
     
   }
@@ -67,15 +68,15 @@ public class PersistenceCouponUser {
     return company;
   }
   
-  
   @Transactional
   public void deleteCompany(int id, String email) {
+    this.couponRepo.deleteCompanyCouponsPurchases(id);
     this.companyRepo.deleteById(id);
     this.couponUserRepo.deleteByUsername(email);
-    
     int couponsDeleted =  this.couponRepo.deleteByCompanyId(id);
+  
     System.out.println("couponsDeleted "+couponsDeleted);
-    int purchaseDeleted = this.purchaseRepo.deleteCompanyCouponsPurchases(id);
+    System.out.println("purchaseDeleted");
   }
   
   
@@ -101,11 +102,12 @@ public class PersistenceCouponUser {
     CouponUser couponUser = couponUserRepo.findByUsername(customerFromDb.getEmail());
     couponUser.setUsername(customer.getEmail());
     couponUser.setPassword(customer.getPassword());
+    this.couponUserRepo.save(couponUser);
     this.customerRepo.save(customer);
     return customer;
   }
   
-  
+  @Transactional
   public void deleteCustomer(String username, int customerId) {
     this.customerRepo.deleteById(customerId);
     this.couponUserRepo.deleteByUsername(username);

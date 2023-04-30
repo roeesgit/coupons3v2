@@ -34,9 +34,10 @@ public class EntityUniqueFieldValidator implements ConstraintValidator <EntityUn
     case "companies":
       switch (this.columnName) {
       case "email":
-        return !this.companyRepo.existsByEmailAndIdNot(value.toString(), SCHid);
+        return (this.companyRepo.existsByEmailAndNotEmail(value.toString())==0);
+//        return !this.companyRepo.existsByEmailAndIdNot(value.toString(), SCHid);
       case "name":
-        return !this.companyRepo.existsByNameAndIdNot(value.toString(), SCHid);
+        return (this.companyRepo.existsByNameAndNameNot(value.toString())==0);
       case "id":
         return !this.companyRepo.existsById(Integer.parseInt(value.toString()));
       }
@@ -44,13 +45,14 @@ public class EntityUniqueFieldValidator implements ConstraintValidator <EntityUn
     case "customers":
       switch (this.columnName) {
       case "email":
-        return !this.customerRepo.existsByEmailAndIdNot(value.toString(), SCHid);
+        return (this.customerRepo.existsByEmailAndNotEmail(value.toString(), SCHid)==0);
       case "id":
         return Integer.parseInt(value.toString()) < 1;
       }
     case "coupons":
       switch (this.columnName) {
       case "title":
+       
         return !this.couponRepo.existsByTitleAndCompanyId(value.toString(), SCHid);
       case "id":
         return Integer.parseInt(value.toString()) < 1;

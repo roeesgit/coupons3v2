@@ -12,6 +12,8 @@ public interface CustomerRepo extends JpaRepository<Customer,Integer> {
   
   Customer findByEmail(String username);
   
+  @Query(nativeQuery = true,value = "select (count(c.id) > 0) from customers c where c.email = ?1 and c.email != ?1")
+  int existsByEmailAndNotEmail(String toString, int scHid);
   
   
 }

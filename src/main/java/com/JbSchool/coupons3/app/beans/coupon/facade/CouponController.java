@@ -39,12 +39,12 @@ public class CouponController {
     return this.couponServiceImpl.getCompanyCoupons();
   }
   
-  @GetMapping("/company/{category}")
+  @GetMapping("/company/byCategory/{category}")
   public List <Coupon> getCompanyCouponsByCategory(@PathVariable String category) {
-    return this.couponServiceImpl.getCompanyCouponsByCategory(CategoryProvider.valueOf(category));
+    return this.couponServiceImpl.getCompanyCouponsByCategory(CategoryProvider.valueOf(category.toUpperCase()));
   }
   
-  @GetMapping("/company/{price}")
+  @GetMapping("/company/byPrice/{price}")
   public List <Coupon> getCompanyCouponsByPrice(@PathVariable int price) {
     return this.couponServiceImpl.getCompanyCouponsByPrice(price);
   }
@@ -57,7 +57,7 @@ public class CouponController {
   
   @GetMapping("/customer/{category}")
   public List <Coupon> getCustomerCouponsByCategory(@PathVariable String category) {
-    return this.couponServiceImpl.getCustomerCouponsByCategory(CategoryProvider.valueOf(category));
+    return this.couponServiceImpl.getCustomerCouponsByCategory(CategoryProvider.valueOf(category.toUpperCase()));
   }
   
   @GetMapping("/customer/{price}")
@@ -69,7 +69,7 @@ public class CouponController {
     return this.couponServiceImpl.getValidCouponTOPurchaseForCustomer();
   }
   
-   @GetMapping("/customer/buyCoupon")
+   @PatchMapping("/customer/buyCoupon")
   public void buyCoupon(@RequestBody Coupon coupon) throws CouponException {
     this.couponServiceImpl.buyCoupon(coupon ,this.mapper.userIdFromSCH());
   }

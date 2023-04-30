@@ -62,9 +62,6 @@ public class Customer {
   @LastModifiedDate
   private LocalDateTime lastModifiedDate;
   
-//  @ToString.Exclude
-//  @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "customer")
-//  private List <Purchase> customerCoupons;
-  
+
   
 }

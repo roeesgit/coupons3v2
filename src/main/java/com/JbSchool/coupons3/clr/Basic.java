@@ -11,7 +11,6 @@ import com.JbSchool.coupons3.security.entites.users.*;
 import lombok.*;
 import org.springframework.boot.*;
 import org.springframework.data.domain.*;
-import org.springframework.security.core.context.*;
 import org.springframework.security.crypto.password.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
@@ -38,34 +37,40 @@ public class Basic implements CommandLineRunner {
   
   @Override
   public void run(String... args) {
+//    initAdminOnly();
+//    initAll();
   
-    
-    Pageable limit = PageRequest.of(0, 1);
-    Page <Company> companies = this.companyRepo.findAll(limit);
-    
-    if (companies.get().findAny().isEmpty()) {
-      initCouponUsersAuth();
-      CouponUser admin = CouponUser.builder()
-        .password(passwordEncoder.encode("admin"))
-        .username("admin")
-//        .couponUserAuths(List.of(couponAuths.get(0), couponAuths.get(3), couponAuths.get(4), couponAuths.get(5), couponAuths.get(6), couponAuths.get(7)))
-        .build();
   
-      this.couponUserRepo.save(admin);
-      this.couponUserAuthProvider.setAuthForAdmin(admin);
-      
-      initCategories();
-      System.out.println("Categories Done");
-      initCompaniesAndCoupons();
-      System.out.println("Companies and coupons Done");
-      initCustomers();
-      System.out.println("Customers Done");
-      initPurchases();
-      System.out.println("Purchases Done");
-      
-      System.out.println("init done!");
-      
-    }
+  }
+  
+  
+  private void initAll() {
+  initAdminOnly();
+    initCategories();
+    System.out.println("Categories Done");
+    initCompaniesAndCoupons();
+    System.out.println("Companies and coupons Done");
+    initCustomers();
+    System.out.println("Customers Done");
+    initPurchases();
+    System.out.println("Purchases Done");
+  
+    System.out.println("init done!");
+  
+  
+  }
+  
+  
+  private void initAdminOnly() {
+    initCouponUsersAuth();
+    CouponUser admin = CouponUser.builder()
+      .password(passwordEncoder.encode("admin"))
+      .username("admin")
+      .build();
+  
+    this.couponUserRepo.save(admin);
+    this.couponUserAuthProvider.setAuthForAdmin(admin);
+  
   }
   
   

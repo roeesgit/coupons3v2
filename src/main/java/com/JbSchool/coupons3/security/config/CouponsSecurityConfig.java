@@ -21,10 +21,23 @@ public class CouponsSecurityConfig {
       .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
       .authorizeHttpRequests(
         (reg) -> {
-          regAuthConfig(reg);
-          regCompaniesConfig(reg);
-          regCustomerConfig(reg);
-          regCouponsConfig(reg);
+          
+          // AUTH
+          reg.requestMatchers("/api/v1/auth/**").permitAll();
+  
+          // COMPANIES
+          reg.requestMatchers("/api/v1/companies/loggedCompany").hasAuthority( "ROLE_COMPANY");
+          reg.requestMatchers("/api/v1/companies/**").hasAuthority("ROLE_ADMIN");
+          
+          // CUSTOMERS
+          reg.requestMatchers( "/api/v1/customers/loggedCustomer").hasAuthority("ROLE_CUSTOMER");
+          reg.requestMatchers("/api/v1/customers/**").hasAuthority("ROLE_ADMIN");
+          
+          // COUPONS
+          reg.requestMatchers( "/api/v1/coupons/customer/**").hasAuthority("ROLE_CUSTOMER");
+          reg.requestMatchers( "/api/v1/coupons/**").hasAuthority("ROLE_COMPANY");
+          
+          //ANY UNSPECIFIED
           reg.anyRequest().permitAll();
           
         })
@@ -33,38 +46,5 @@ public class CouponsSecurityConfig {
       .csrf().disable()
       .build();
   }
-  
-  
-  private void regAuthConfig(AuthorizeHttpRequestsConfigurer <HttpSecurity>.AuthorizationManagerRequestMatcherRegistry reg) {
-    reg.requestMatchers("/api/v1/auth/**").permitAll();
-    System.out.println(1);
-  }
-  
-  
-  private void regCompaniesConfig(AuthorizeHttpRequestsConfigurer <HttpSecurity>.AuthorizationManagerRequestMatcherRegistry reg) {
-    reg.requestMatchers("/api/v1/companies/loggedCompany").hasAnyAuthority( "ROLE_COMPANY");
-    reg.requestMatchers("/api/v1/companies/**").hasAnyAuthority("ROLE_ADMIN");
-  }
-  
-  
-  private void regCustomerConfig(AuthorizeHttpRequestsConfigurer <HttpSecurity>.AuthorizationManagerRequestMatcherRegistry reg) {
-    reg.requestMatchers(HttpMethod.GET, "/api/v1/customers/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_CUSTOMER");
-    reg.requestMatchers(HttpMethod.PUT, "/api/v1/customers/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_CUSTOMER");
-    reg.requestMatchers("/api/v1/customers/**").hasAnyAuthority("ROLE_ADMIN");
-  }
-  
-  
-  private void regCouponsConfig(AuthorizeHttpRequestsConfigurer <HttpSecurity>.AuthorizationManagerRequestMatcherRegistry reg) {
-    reg.requestMatchers(HttpMethod.POST, "/api/v1/coupons/**").hasAnyAuthority("ROLE_COMPANY");
-    reg.requestMatchers(HttpMethod.PUT, "/api/v1/coupons/**").hasAnyAuthority("ROLE_COMPANY");
-    reg.requestMatchers(HttpMethod.DELETE, "/api/v1/coupons/**").hasAnyAuthority("ROLE_COMPANY");
-    reg.requestMatchers(HttpMethod.GET, "/api/v1/coupons/getAll").hasAnyAuthority("ROLE_ADMIN");
-    reg.requestMatchers(HttpMethod.GET, "/api/v1/coupons/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_COMPANY", "ROLE_CUSTOMER");
-    reg.requestMatchers("/api/v1/coupons/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_COMPANY");
-  }
-  
-  
-  
-  
   
 }

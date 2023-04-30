@@ -24,7 +24,7 @@ public class CompanyController {
     return this.companyServiceImpl.addCompany(company);
   }
   
-  @PutMapping
+  @PutMapping("/{companyId}")
   public void updateCompany(@RequestBody @Valid Company company, @PathVariable int companyId) throws CouponException {
      companyServiceImpl.updateCompany(company,companyId);
   }

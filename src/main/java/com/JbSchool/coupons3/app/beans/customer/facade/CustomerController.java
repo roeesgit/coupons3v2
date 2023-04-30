@@ -20,9 +20,9 @@ public class CustomerController {
     return this.customerService.addCustomer(Customer);
   }
   
-  @PutMapping
-  public void updateCustomer(@RequestBody @Valid Customer Customer, @PathVariable int CustomerId) throws CouponException {
-    customerService.updateCustomer(Customer,CustomerId);
+  @PutMapping("/{customerId}")
+  public void updateCustomer(@RequestBody @Valid Customer customer, @PathVariable int customerId) throws CouponException {
+    customerService.updateCustomer(customer,customerId);
   }
   
   @DeleteMapping("/{id}")
