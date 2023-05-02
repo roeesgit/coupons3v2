@@ -2,9 +2,7 @@ package com.JbSchool.coupons3.security.config;
 
 import lombok.*;
 import org.springframework.context.annotation.*;
-import org.springframework.http.*;
 import org.springframework.security.config.annotation.web.builders.*;
-import org.springframework.security.config.annotation.web.configurers.*;
 import org.springframework.security.config.http.*;
 import org.springframework.security.web.*;
 import org.springframework.security.web.authentication.*;

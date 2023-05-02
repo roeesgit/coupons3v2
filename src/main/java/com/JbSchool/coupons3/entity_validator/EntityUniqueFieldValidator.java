@@ -6,9 +6,9 @@ import com.JbSchool.coupons3.app.beans.customer.config.*;
 import com.JbSchool.coupons3.app.dto.*;
 import jakarta.validation.*;
 import lombok.*;
+import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class EntityUniqueFieldValidator implements ConstraintValidator <EntityUniqueFieldConfig, Object> {
-  
   
   private final CompanyRepo companyRepo;
   

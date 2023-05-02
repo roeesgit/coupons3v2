@@ -5,7 +5,7 @@ import jakarta.validation.*;
 import java.lang.annotation.*;
 @Documented
 @Constraint(validatedBy = EntityUniqueFieldValidator.class)
-@Target({ElementType.FIELD, ElementType.METHOD})
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EntityUniqueFieldConfig {
   String message() default "Value must be unique";
