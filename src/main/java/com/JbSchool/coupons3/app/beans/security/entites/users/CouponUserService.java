@@ -1,9 +1,9 @@
-package com.JbSchool.coupons3.security.entites.users;
+package com.JbSchool.coupons3.app.beans.security.entites.users;
 
+import com.JbSchool.coupons3.app.beans.security.auth.*;
+import com.JbSchool.coupons3.app.beans.security.exception.*;
+import com.JbSchool.coupons3.app.beans.security.token.*;
 import com.JbSchool.coupons3.app.utils.*;
-import com.JbSchool.coupons3.security.auth.*;
-import com.JbSchool.coupons3.security.exception.*;
-import com.JbSchool.coupons3.security.token.*;
 import lombok.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.password.*;

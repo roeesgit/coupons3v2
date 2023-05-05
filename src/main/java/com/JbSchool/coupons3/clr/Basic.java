@@ -5,12 +5,11 @@ import com.JbSchool.coupons3.app.beans.company.config.*;
 import com.JbSchool.coupons3.app.beans.coupon.config.*;
 import com.JbSchool.coupons3.app.beans.customer.config.*;
 import com.JbSchool.coupons3.app.beans.purchase.config.*;
-import com.JbSchool.coupons3.security.config.*;
-import com.JbSchool.coupons3.security.entites.auth.*;
-import com.JbSchool.coupons3.security.entites.users.*;
+import com.JbSchool.coupons3.app.beans.security.config.*;
+import com.JbSchool.coupons3.app.beans.security.entites.auth.*;
+import com.JbSchool.coupons3.app.beans.security.entites.users.*;
 import lombok.*;
 import org.springframework.boot.*;
-import org.springframework.data.domain.*;
 import org.springframework.security.crypto.password.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
@@ -23,8 +22,8 @@ import java.util.*;
 public class Basic implements CommandLineRunner {
   
   private final CouponUserAuthProvider couponUserAuthProvider;
-  private final CouponUserRepo  couponUserRepo;
-  private final CouponAuthRepo  couponAuthRepo;
+  private final CouponUserRepo         couponUserRepo;
+  private final CouponAuthRepo         couponAuthRepo;
   private final PasswordEncoder passwordEncoder;
   private final CategoryRepo    categoryRepo;
   private final CompanyRepo     companyRepo;
@@ -39,12 +38,13 @@ public class Basic implements CommandLineRunner {
   public void run(String... args) {
 //    initAdminOnly();
 //    initAll();
-  
+
   
   }
   
   
   private void initAll() {
+  
   initAdminOnly();
     initCategories();
     System.out.println("Categories Done");
@@ -99,6 +99,7 @@ public class Basic implements CommandLineRunner {
   @Transactional
   
   private void initCompaniesAndCoupons() {
+    int picNum = 0;
     int COMPANIES = 10;
     List <Coupon> coupons = new ArrayList <>();
     int COUPONS = 50;
@@ -129,7 +130,9 @@ public class Basic implements CommandLineRunner {
         coupon.setTitle("title " + (j + 1));
         coupon.setDescription("description " + (j + 1));
         coupon.setStartDate(LocalDate.now().plusDays(ranDays));
-        coupon.setImage("image " + (j + 1));
+        picNum++;
+        String pics =  "https://picsum.photos/seed/"+picNum+"/150/150";
+        coupon.setImage(pics);
         coupon.setPrice(random.nextInt(1945) + 55);
         if (i == 0 && j == 0) {
           coupon.setCategory(CategoryProvider.values()[0]);

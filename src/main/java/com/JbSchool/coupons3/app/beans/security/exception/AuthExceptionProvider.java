@@ -1,4 +1,4 @@
-package com.JbSchool.coupons3.security.exception;
+package com.JbSchool.coupons3.app.beans.security.exception;
 
 
 import lombok.*;

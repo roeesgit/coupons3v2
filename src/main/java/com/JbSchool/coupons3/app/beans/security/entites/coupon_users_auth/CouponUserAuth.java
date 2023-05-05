@@ -1,6 +1,6 @@
-package com.JbSchool.coupons3.security.entites.coupon_users_auth;
-import com.JbSchool.coupons3.security.entites.auth.*;
-import com.JbSchool.coupons3.security.entites.users.*;
+package com.JbSchool.coupons3.app.beans.security.entites.coupon_users_auth;
+import com.JbSchool.coupons3.app.beans.security.entites.auth.*;
+import com.JbSchool.coupons3.app.beans.security.entites.users.*;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.context.annotation.*;

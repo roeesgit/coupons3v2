@@ -57,7 +57,6 @@ public interface CouponRepo extends JpaRepository <Coupon, Integer> {
   @Transactional
   @Modifying
   @Query(nativeQuery = true,value =
-//    "delete from purchase where coupon_id in (select id from coupons where company_id = :companyOwnedId ) "
     "delete from purchases where coupon_id in (select id from coupons where company_id = ? ) "
   )
   void deleteCompanyCouponsPurchases( int companyId);

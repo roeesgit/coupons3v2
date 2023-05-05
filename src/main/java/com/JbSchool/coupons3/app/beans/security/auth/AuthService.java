@@ -1,7 +1,7 @@
-package com.JbSchool.coupons3.security.auth;
+package com.JbSchool.coupons3.app.beans.security.auth;
 
-import com.JbSchool.coupons3.security.entites.users.*;
-import com.JbSchool.coupons3.security.token.*;
+import com.JbSchool.coupons3.app.beans.security.entites.users.*;
+import com.JbSchool.coupons3.app.beans.security.token.*;
 import lombok.*;
 import org.springframework.security.authentication.*;
 import org.springframework.stereotype.*;
@@ -11,8 +11,8 @@ import org.springframework.stereotype.*;
 public class AuthService {
   
   private final AuthenticationManager authenticationManager;
-  private final TokenConfig       tokenConfig;
-  private final CouponUserService couponUserService;
+  private final TokenConfig           tokenConfig;
+  private final CouponUserService     couponUserService;
   
   
   public TokenDTO validateLoginDetails(LoginRequestDTO loginRequestDTO) {

@@ -1,11 +1,12 @@
-package com.JbSchool.coupons3.app.dto;
+package com.JbSchool.coupons3.app.utils;
 
 import com.JbSchool.coupons3.app.beans.company.config.*;
 import com.JbSchool.coupons3.app.beans.coupon.config.*;
 import com.JbSchool.coupons3.app.beans.customer.config.*;
-import com.JbSchool.coupons3.security.auth.*;
-import com.JbSchool.coupons3.security.entites.users.*;
-import com.JbSchool.coupons3.security.token.*;
+import com.JbSchool.coupons3.app.beans.security.auth.*;
+import com.JbSchool.coupons3.app.beans.security.entites.users.*;
+import com.JbSchool.coupons3.app.beans.security.token.*;
+import com.JbSchool.coupons3.app.dto.*;
 import lombok.*;
 import org.springframework.security.core.*;
 import org.springframework.security.core.context.*;
@@ -17,8 +18,8 @@ import java.util.stream.*;
 @RequiredArgsConstructor
 public class Mapper {
   
-  private final TokenConfig  tokenConfig;
-  private final CompanyRepo  companyRepo;
+  private final TokenConfig tokenConfig;
+  private final CompanyRepo companyRepo;
   private final CustomerRepo customerRepo;
   
   

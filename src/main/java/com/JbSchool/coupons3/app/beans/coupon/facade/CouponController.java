@@ -29,7 +29,7 @@ public class CouponController {
   }
   
   
-  @GetMapping
+  @GetMapping("/all")
   public List <CouponDto> getAll() {
     return this.couponServiceImpl.getAll();
   }

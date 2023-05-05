@@ -3,10 +3,9 @@ package com.JbSchool.coupons3.entity_validator;
 import com.JbSchool.coupons3.app.beans.company.config.*;
 import com.JbSchool.coupons3.app.beans.coupon.config.*;
 import com.JbSchool.coupons3.app.beans.customer.config.*;
-import com.JbSchool.coupons3.app.dto.*;
+import com.JbSchool.coupons3.app.utils.*;
 import jakarta.validation.*;
 import lombok.*;
-import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class EntityUniqueFieldValidator implements ConstraintValidator <EntityUniqueFieldConfig, Object> {
   

@@ -1,7 +1,8 @@
-package com.JbSchool.coupons3.security.config;
+package com.JbSchool.coupons3.app.beans.security.config;
 
 import lombok.*;
 import org.springframework.context.annotation.*;
+import org.springframework.http.*;
 import org.springframework.security.config.annotation.web.builders.*;
 import org.springframework.security.config.http.*;
 import org.springframework.security.web.*;
@@ -22,6 +23,7 @@ public class CouponsSecurityConfig {
           
           // AUTH
           reg.requestMatchers("/api/v1/auth/**").permitAll();
+          reg.requestMatchers(HttpMethod.GET , "/api/v1/coupons/all").permitAll();
   
           // COMPANIES
           reg.requestMatchers("/api/v1/companies/loggedCompany").hasAuthority( "ROLE_COMPANY");

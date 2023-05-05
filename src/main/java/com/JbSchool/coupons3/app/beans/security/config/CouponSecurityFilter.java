@@ -1,7 +1,7 @@
-package com.JbSchool.coupons3.security.config;
+package com.JbSchool.coupons3.app.beans.security.config;
 
-import com.JbSchool.coupons3.security.entites.users.*;
-import com.JbSchool.coupons3.security.token.*;
+import com.JbSchool.coupons3.app.beans.security.entites.users.*;
+import com.JbSchool.coupons3.app.beans.security.token.*;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import lombok.*;
@@ -9,11 +9,6 @@ import org.springframework.security.authentication.*;
 import org.springframework.security.core.context.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.filter.*;
-import org.springframework.web.util.*;
-
-import java.io.*;
-import java.nio.charset.*;
-import java.util.*;
 @Component @AllArgsConstructor
 public class CouponSecurityFilter extends OncePerRequestFilter {
   

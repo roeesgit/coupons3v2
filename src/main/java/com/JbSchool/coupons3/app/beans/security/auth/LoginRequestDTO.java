@@ -1,4 +1,4 @@
-package com.JbSchool.coupons3.security.auth;
+package com.JbSchool.coupons3.app.beans.security.auth;
 
 import lombok.*;
 
