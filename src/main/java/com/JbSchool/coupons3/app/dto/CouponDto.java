@@ -14,6 +14,7 @@ public class CouponDto {
   @Enumerated(EnumType.STRING)
   private CategoryProvider category;
   
+  private int id;
   private String    title;
   private String    description;
   private LocalDate endDate;

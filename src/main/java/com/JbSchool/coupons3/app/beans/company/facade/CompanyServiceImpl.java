@@ -36,8 +36,8 @@ public class CompanyServiceImpl implements CompanyService {
   public void updateCompany(Company company, int companyId) throws CouponException {
     //todo לבדוק אם אפשר לקצר 3 קריאות לDB ע"י QUERY
     Company companyFromDb =  this.couponExcValidator.getOptionalCompany(companyId);
-    this.mapper.companyToUserDto(
-      this.persistenceCouponUser.updateCompany(company, companyFromDb));
+    
+      this.persistenceCouponUser.updateCompany(company, companyFromDb);
   }
   
   

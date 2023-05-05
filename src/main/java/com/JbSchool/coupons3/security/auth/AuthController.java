@@ -15,7 +15,9 @@ public class AuthController {
     
     @PostMapping("/login")
     public TokenDTO login(@RequestBody LoginRequestDTO loginRequestDTO) {
-        return this.authService.validateLoginDetails(loginRequestDTO);
+        TokenDTO t = this.authService.validateLoginDetails(loginRequestDTO);
+        System.out.println(t);
+        return t;
     }
     
     

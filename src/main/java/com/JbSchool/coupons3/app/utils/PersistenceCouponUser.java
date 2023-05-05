@@ -35,22 +35,19 @@ public class PersistenceCouponUser {
       company.setPassword(passwordEncoder.encode(company.getPassword()));
       CouponUser couponUser = CouponUser.builder()
         .username(company.getEmail())
-        .password(company.getPassword())
-        
-        .build();
-      // TODO: 11/22/2022 test
-      System.out.println("********* Test 1 **********");
+        .password(company.getPassword()).build();
       this.companyRepo.save(company);
-      System.out.println("********* Test 2 **********");
       this.couponUserRepo.save(couponUser);
-      System.out.println("********* Test 3 **********");
       this.couponUserAuthProvider.setAuthForCompany(couponUser);
-      System.out.println("********* Test 5 **********");
-//      entityManager.getTransaction().commit();
+
+      
+      
+      //      entityManager.getTransaction().commit();
 //      System.out.println(entityManager.getTransaction().isActive());
 //    } catch (Exception e) {
 //      entityManager.getTransaction().rollback();
 //    }
+   
     return company;
     
   }

@@ -44,4 +44,7 @@ public interface CouponService {
   void buyCoupon(Coupon coupon, int customerId) throws CouponException;
   
   
+  List<CouponDto> getAll();
+  
+  
 }

@@ -41,6 +41,7 @@ public class Mapper {
   
   public CouponDto couponToCouponDto(Coupon coupon) {
     return CouponDto.builder()
+      .id(coupon.getId())
       .title(coupon.getTitle())
       .description(coupon.getDescription())
       .category(coupon.getCategory())

@@ -11,6 +11,7 @@ import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 
 import java.util.*;
+import java.util.stream.*;
 @Service
 @RequiredArgsConstructor
 public class CouponServiceImpl implements CouponService {
@@ -99,5 +100,11 @@ public class CouponServiceImpl implements CouponService {
     this.purchaseService.addPurchase(purchase);
     this.couponRepo.save(coupon);
   }
+  
+  @Override
+  public List<CouponDto> getAll() {
+    return  this.couponRepo.findAll().stream().map(mapper::couponToCouponDto).collect(Collectors.toList());
+  }
+  
   
 }

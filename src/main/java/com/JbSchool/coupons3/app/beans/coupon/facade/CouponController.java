@@ -29,6 +29,10 @@ public class CouponController {
   }
   
   
+  @GetMapping
+  public List <CouponDto> getAll() {
+    return this.couponServiceImpl.getAll();
+  }
   @DeleteMapping("/{id}")
   public void delete(@PathVariable int id) throws CouponException {
     this.couponServiceImpl.deleteCoupon(id);
