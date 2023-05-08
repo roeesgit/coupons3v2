@@ -33,7 +33,7 @@ public class CompanyController {
   }
   
   @GetMapping
-  @ResponseStatus(HttpStatus.FOUND)
+//  @ResponseStatus(HttpStatus.FOUND)
   public List <UserDto> getAllCompanies(){
     return this.companyServiceImpl.getAllCompanies();
   }

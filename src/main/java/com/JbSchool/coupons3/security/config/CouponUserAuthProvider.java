@@ -1,8 +1,8 @@
-package com.JbSchool.coupons3.app.beans.security.config;
+package com.JbSchool.coupons3.security.config;
 
-import com.JbSchool.coupons3.app.beans.security.entites.auth.*;
-import com.JbSchool.coupons3.app.beans.security.entites.coupon_users_auth.*;
-import com.JbSchool.coupons3.app.beans.security.entites.users.*;
+import com.JbSchool.coupons3.security.entites.auth.*;
+import com.JbSchool.coupons3.security.entites.coupon_users_auth.*;
+import com.JbSchool.coupons3.security.entites.users.*;
 import lombok.*;
 import org.springframework.stereotype.*;
 

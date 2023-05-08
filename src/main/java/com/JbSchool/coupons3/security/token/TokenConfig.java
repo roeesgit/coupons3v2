@@ -1,8 +1,8 @@
-package com.JbSchool.coupons3.app.beans.security.token;
+package com.JbSchool.coupons3.security.token;
 
-import com.JbSchool.coupons3.app.beans.security.entites.users.*;
+import com.JbSchool.coupons3.security.entites.users.*;
 import io.jsonwebtoken.*;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
 import java.util.*;

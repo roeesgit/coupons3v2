@@ -12,7 +12,7 @@ public class CorsConfig {
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     CorsConfiguration config = new CorsConfiguration();
     config.setAllowCredentials(true);
-    config.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://JbSchool.com"));
+    config.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
     config.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
     config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
     source.registerCorsConfiguration("/**", config);

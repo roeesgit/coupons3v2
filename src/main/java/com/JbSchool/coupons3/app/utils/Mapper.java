@@ -3,10 +3,10 @@ package com.JbSchool.coupons3.app.utils;
 import com.JbSchool.coupons3.app.beans.company.config.*;
 import com.JbSchool.coupons3.app.beans.coupon.config.*;
 import com.JbSchool.coupons3.app.beans.customer.config.*;
-import com.JbSchool.coupons3.app.beans.security.auth.*;
-import com.JbSchool.coupons3.app.beans.security.entites.users.*;
-import com.JbSchool.coupons3.app.beans.security.token.*;
 import com.JbSchool.coupons3.app.dto.*;
+import com.JbSchool.coupons3.security.auth.*;
+import com.JbSchool.coupons3.security.entites.users.*;
+import com.JbSchool.coupons3.security.token.*;
 import lombok.*;
 import org.springframework.security.core.*;
 import org.springframework.security.core.context.*;
@@ -25,6 +25,7 @@ public class Mapper {
   
   public UserDto companyToUserDto(Company company) {
     return UserDto.builder()
+      .id(company.getId())
       .name(company.getName())
       .email(company.getEmail())
       .build();
@@ -71,6 +72,7 @@ public class Mapper {
   
   public UserDto customerToUserDto(Customer customer) {
     return UserDto.builder()
+      .id(customer.getId())
       .name(customer.getFirstName() + " "+ customer.getLastName())
       .email(customer.getEmail())
       .build();

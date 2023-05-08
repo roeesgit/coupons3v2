@@ -14,6 +14,10 @@ public interface PurchaseRepo extends JpaRepository<Purchase,Integer> {
   
   
   int deleteByCustomerId(int customerId);
+  
+  
+  
+  Purchase findByCustomerIdAndCouponId(int customerId, int couponId);
 //
   
   

@@ -1,7 +1,7 @@
-package com.JbSchool.coupons3.app.beans.security.config;
+package com.JbSchool.coupons3.security.config;
 
-import com.JbSchool.coupons3.app.beans.security.entites.users.*;
-import com.JbSchool.coupons3.app.beans.security.token.*;
+import com.JbSchool.coupons3.security.entites.users.*;
+import com.JbSchool.coupons3.security.token.*;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import lombok.*;
@@ -20,7 +20,7 @@ public class CouponSecurityFilter extends OncePerRequestFilter {
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
     String authHeader = request.getHeader("Authorization");
-    if (authHeader != null && authHeader.startsWith("Bearer")) {
+    if (authHeader != null && authHeader.startsWith("bearer")) {
       String token = authHeader.substring(7);
       String userName = this.tokenConfig.getUserNameFromToken(token);
       if (userName != null) {

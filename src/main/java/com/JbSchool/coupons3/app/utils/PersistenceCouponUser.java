@@ -19,35 +19,28 @@ public class PersistenceCouponUser {
   private final CompanyRepo            companyRepo;
   private final CustomerRepo customerRepo;
   private final CouponRepo   couponRepo;
-  private final PurchaseRepo purchaseRepo;
+  private final PurchaseRepo           purchaseRepo;
   private final CouponUserAuthProvider couponUserAuthProvider;
-//  @PersistenceContext
-//  private final EntityManager          entityManager;
+  
+  private final EntityManager          entityManager;
   
   private final CouponUserRepo couponUserRepo;
   
   
-  //  @Transactional
+    @Transactional
   public Company addCompany(Company company) {
-   //todo entityManager.getTransaction().begin();
-//    try {
-      
       company.setPassword(passwordEncoder.encode(company.getPassword()));
       CouponUser couponUser = CouponUser.builder()
         .username(company.getEmail())
         .password(company.getPassword()).build();
+       // TODO: 11/22/2022 test
+      System.out.println("********* Test 1 **********");
       this.companyRepo.save(company);
+             System.out.println("********* Test 2 **********");
       this.couponUserRepo.save(couponUser);
+      System.out.println("********* Test 3 **********");
       this.couponUserAuthProvider.setAuthForCompany(couponUser);
 
-      
-      
-      //      entityManager.getTransaction().commit();
-//      System.out.println(entityManager.getTransaction().isActive());
-//    } catch (Exception e) {
-//      entityManager.getTransaction().rollback();
-//    }
-   
     return company;
     
   }

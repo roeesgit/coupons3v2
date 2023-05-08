@@ -1,4 +1,4 @@
-package com.JbSchool.coupons3.app.beans.security.entites.auth;
+package com.JbSchool.coupons3.security.entites.auth;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.context.annotation.*;

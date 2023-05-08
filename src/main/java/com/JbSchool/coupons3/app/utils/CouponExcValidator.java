@@ -44,13 +44,18 @@ public class CouponExcValidator {
   
   
   public void buyCoupon(Coupon coupon, int customerId) throws CouponException {
-    List <Coupon> purchaseCoupons = couponRepo.getCustomerCoupons(customerId);
-    if (purchaseCoupons.contains(coupon)) {
+//    List <Coupon> purchaseCoupons = couponRepo.getCustomerCoupons(customerId);
+    Purchase existingCoupon  = this.purchaseRepo.findByCustomerIdAndCouponId(customerId,coupon.getId());
+    System.out.println("/**********************************");
+//    purchaseCoupons.forEach(System.out::println);
+    System.out.println("coupon : "+coupon);
+//    if (purchaseCoupons.contains(coupon)) {
+    if (existingCoupon!=null) {
       throw new CouponException(CouponExceptionProvider.COUPON_ALREADY_OWNED_BY_CUSTOMER.getMessage());
     }
     if (coupon.getAmount() < 1) {
       throw new CouponException(CouponExceptionProvider.OUT_OF_STOCK.getMessage());
-    }
+      }
     if (coupon.getEndDate().isBefore(LocalDate.now())) {
       throw new CouponException(CouponExceptionProvider.COUPON_EXPIRED.getMessage());
     }

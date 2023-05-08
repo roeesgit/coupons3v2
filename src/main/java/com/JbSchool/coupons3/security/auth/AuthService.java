@@ -1,7 +1,7 @@
-package com.JbSchool.coupons3.app.beans.security.auth;
+package com.JbSchool.coupons3.security.auth;
 
-import com.JbSchool.coupons3.app.beans.security.entites.users.*;
-import com.JbSchool.coupons3.app.beans.security.token.*;
+import com.JbSchool.coupons3.security.entites.users.*;
+import com.JbSchool.coupons3.security.token.*;
 import lombok.*;
 import org.springframework.security.authentication.*;
 import org.springframework.stereotype.*;
@@ -19,7 +19,7 @@ public class AuthService {
     boolean isLoginDetailsValid = this.isLoginDetailsValid(loginRequestDTO);
     if (isLoginDetailsValid) {
       CouponUser user = this.couponUserService.loadUserByUsername(loginRequestDTO.getUsername());
-  
+      
       String token = this.tokenConfig.generateToken(this.tokenConfig
         .buildClaims(user));
       return new TokenDTO(token);

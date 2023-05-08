@@ -60,4 +60,8 @@ public interface CouponRepo extends JpaRepository <Coupon, Integer> {
     "delete from purchases where coupon_id in (select id from coupons where company_id = ? ) "
   )
   void deleteCompanyCouponsPurchases( int companyId);
+  
+  
+  
+  
 }

@@ -1,4 +1,4 @@
-package com.JbSchool.coupons3.app.beans.security.config;
+package com.JbSchool.coupons3.security.config;
 
 import lombok.*;
 import org.springframework.context.annotation.*;
