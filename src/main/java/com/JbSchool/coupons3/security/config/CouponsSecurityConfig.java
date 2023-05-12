@@ -38,7 +38,7 @@ public class CouponsSecurityConfig {
           reg.requestMatchers( "/api/v1/coupons/**").hasAuthority("ROLE_COMPANY");
           
           //ANY UNSPECIFIED
-          reg.anyRequest().permitAll();
+          reg.anyRequest().authenticated();
           
         })
       .addFilterBefore(couponSecurityFilter, UsernamePasswordAuthenticationFilter.class)

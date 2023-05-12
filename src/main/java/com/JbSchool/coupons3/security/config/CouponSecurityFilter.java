@@ -20,7 +20,7 @@ public class CouponSecurityFilter extends OncePerRequestFilter {
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
     String authHeader = request.getHeader("Authorization");
-    if (authHeader != null && authHeader.startsWith("bearer")) {
+    if (authHeader != null && authHeader.startsWith("Bearer")) {
       String token = authHeader.substring(7);
       String userName = this.tokenConfig.getUserNameFromToken(token);
       if (userName != null) {

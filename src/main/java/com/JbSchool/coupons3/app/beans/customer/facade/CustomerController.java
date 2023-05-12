@@ -31,7 +31,6 @@ public class CustomerController {
   }
   
   @GetMapping
-  @ResponseStatus(HttpStatus.FOUND)
   public List <UserDto> getAllCustomers(){
     return this.customerService.getAllCustomers();
   }
