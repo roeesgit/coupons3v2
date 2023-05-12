@@ -10,16 +10,16 @@ public interface CompanyRepo extends JpaRepository< Company,Integer> {
   boolean existsByEmailAndIdNot(String email, int id);
   
   
-  @Query(nativeQuery = true,value = "select (count(c.id) > 0) from Companies c where c.email = ?1 and c.email != ?1")
-  int existsByEmailAndNotEmail(String email);
+//  @Query(nativeQuery = true,value = "select (count(c.id) > 0) from Companies c where c.email = ?1 and c.email != ?1")
+//  int existsByEmailAndNotEmail(String email);
   
   Company findByEmail(String username);
   
   
   boolean existsByNameAndIdNot(String toString,int id);
   
-  @Query(nativeQuery = true,value = "select (count(c.id) > 0) from Companies c where c.name = ?1 and c.name != ?1")
-  int existsByNameAndNameNot(String toString);
+//  @Query(nativeQuery = true,value = "select (count(c.id) > 0) from Companies c where c.name = ?1 and c.name != ?1")
+//  int existsByNameAndNameNot(String toString);
   
   
 }

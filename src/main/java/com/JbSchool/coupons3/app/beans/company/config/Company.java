@@ -10,6 +10,7 @@ import org.hibernate.validator.constraints.*;
 import org.springframework.context.annotation.*;
 import org.springframework.data.annotation.*;
 import org.springframework.data.jpa.domain.support.*;
+import org.springframework.security.core.context.*;
 
 import java.time.*;
 
@@ -40,7 +41,7 @@ public class Company {
   @Email(message = "Please provide a valid email address")
   @Pattern(regexp = ".+@.+\\..+", message = "Please provide a valid email address")
   @EntityUniqueFieldConfig(tableName = "companies", columnName = "email",
-    message = "Email must be unique")
+    message = "Email must be unique" )
   @Column(name = "email", nullable = false)
   private String email;
   

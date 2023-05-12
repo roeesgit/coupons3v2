@@ -18,6 +18,7 @@ public class CouponDto {
   private String    title;
   private String    description;
   private LocalDate endDate;
+  private LocalDate startDate;
   private int       amount;
   private double    price;
   private String    image;
