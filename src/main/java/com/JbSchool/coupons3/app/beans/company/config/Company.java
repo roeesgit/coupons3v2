@@ -28,25 +28,19 @@ public class Company {
   
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @EntityUniqueFieldConfig(tableName = "companies",columnName = "id" , message = "Id already exist")
   private int id;
   
   @Column(updatable = false, name = "name", nullable = false)
-//  @Pattern(regexp = "^(?![fuck]).*$",message = "No fu#@ allowed!")
   @Length(min = 3, max = 15, message = "Please provide a valid user name between 3-15 char")
-  @EntityUniqueFieldConfig(tableName = "companies", columnName = "name",
-    message = "Name must be unique")
   private  String name;
   
-  @Email(message = "Please provide a valid email address")
   @Pattern(regexp = ".+@.+\\..+", message = "Please provide a valid email address")
-  @EntityUniqueFieldConfig(tableName = "companies", columnName = "email",
-    message = "Email must be unique" )
+  @Length(min = 3, max = 25, message = "Please provide a valid user name between 3-25 char")
   @Column(name = "email", nullable = false)
   private String email;
   
   @Pattern(
-    regexp = "^(?=.*\\d)(?=.*[a-z])(?=[A-Z])(?=.*[@#$%^&+=])(?!.*\\s).{8,}.*$"
+    regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?!.*\\s).{8,}$"
     ,message =
     "Password must contain at least one digit" +
       ", at least one lowercase letter" +
@@ -65,4 +59,11 @@ public class Company {
   @LastModifiedDate
   private LocalDateTime lastModifiedDate;
   
+  
+  @PrePersist
+  @PreUpdate
+  public void convertFieldsToLowercase() {
+    this.name = this.name.toLowerCase();
+    this.email = this.email.toLowerCase();
+  }
 }

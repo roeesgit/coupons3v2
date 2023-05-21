@@ -9,6 +9,8 @@ import org.springframework.security.authentication.*;
 import org.springframework.security.core.context.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.filter.*;
+
+import java.io.*;
 @Component @AllArgsConstructor
 public class CouponSecurityFilter extends OncePerRequestFilter {
   
@@ -16,9 +18,9 @@ public class CouponSecurityFilter extends OncePerRequestFilter {
   private final CouponUserService couponUserService
     ;
   
-  @SneakyThrows
+//  @SneakyThrows
   @Override
-  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
+  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
     String authHeader = request.getHeader("Authorization");
     if (authHeader != null && authHeader.startsWith("Bearer")) {
       String token = authHeader.substring(7);

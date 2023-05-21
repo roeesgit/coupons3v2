@@ -5,6 +5,7 @@ import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
+import java.io.*;
 import java.util.*;
 @Service
 
@@ -17,10 +18,12 @@ public class TokenConfig {
   
   
   public String generateToken(Map <String, Object> claims) {
+     // TODO: 11/22/2022 test
+    System.out.println(System.currentTimeMillis()  + (1000*20) );
     return Jwts.builder()
       .addClaims(claims)
       .setIssuedAt(new Date(System.currentTimeMillis()))
-      .setExpiration(new Date(System.currentTimeMillis()  + (1000*60*60) ))
+      .setExpiration(new Date(System.currentTimeMillis()  + (1000*10) ))
       .signWith(SignatureAlgorithm.HS256, secretKey)
       .compact();
   }
@@ -41,15 +44,16 @@ public class TokenConfig {
     }
   }
   
-  public String getUserNameFromToken(String token) {
+  public String getUserNameFromToken(String token) throws IOException {
     try {
       return Jwts.parser()
         .setSigningKey(secretKey)
         .parseClaimsJws(token)
         .getBody()
         .get("username").toString();
-    } catch (Exception e) {
-      return "";
+    } catch (ExpiredJwtException e) {
+      System.out.println(e.getClass());
+      throw new IOException(e.getMessage());
     }
   }
   

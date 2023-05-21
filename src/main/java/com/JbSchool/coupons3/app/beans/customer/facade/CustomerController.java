@@ -1,11 +1,9 @@
 package com.JbSchool.coupons3.app.beans.customer.facade;
 
 import com.JbSchool.coupons3.app.beans.customer.config.*;
-import com.JbSchool.coupons3.app.dto.*;
 import com.JbSchool.coupons3.app.utils.*;
 import jakarta.validation.*;
 import lombok.*;
-import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -14,15 +12,16 @@ import java.util.*;
 public class CustomerController {
   
   private final CustomerServiceImpl customerService;
+  private final CustomerValidator customerValidator;
   
   @PostMapping
-  public UserDto addCustomer(@RequestBody @Valid Customer Customer){
-    return this.customerService.addCustomer(Customer);
+  public CustomerDto addCustomer(@RequestBody @Valid Customer customer) throws CouponException {
+    return this.customerService.addCustomer(customer);
   }
   
   @PutMapping("/{customerId}")
-  public void updateCustomer(@RequestBody @Valid Customer customer, @PathVariable int customerId) throws CouponException {
-    customerService.updateCustomer(customer,customerId);
+  public CustomerDto updateCustomer(@RequestBody @Valid Customer customer, @PathVariable int customerId) throws CouponException {
+    return customerService.updateCustomer(customer,customerId);
   }
   
   @DeleteMapping("/{id}")
@@ -31,17 +30,17 @@ public class CustomerController {
   }
   
   @GetMapping
-  public List <UserDto> getAllCustomers(){
+  public List <CustomerDto> getAllCustomers(){
     return this.customerService.getAllCustomers();
   }
   
   
   @GetMapping("/{id}")
-  public UserDto getSingleCustomer(@PathVariable int id) throws CouponException {
+  public CustomerDto getSingleCustomer(@PathVariable int id) throws CouponException {
     return this.customerService.getCustomer(id);
   }
   @GetMapping("/loggedCustomer")
-  public UserDto getLoggedCustomer() throws CouponException {
+  public CustomerDto getLoggedCustomer() throws CouponException {
     return this.customerService.getLoggedCustomer();
   }
 

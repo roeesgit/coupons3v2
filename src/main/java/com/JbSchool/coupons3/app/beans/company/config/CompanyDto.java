@@ -1,4 +1,4 @@
-package com.JbSchool.coupons3.app.dto;
+package com.JbSchool.coupons3.app.beans.company.config;
 
 
 import lombok.*;
@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @Data
-public class UserDto {
+public class CompanyDto {
   
   private int id;
   private String name;

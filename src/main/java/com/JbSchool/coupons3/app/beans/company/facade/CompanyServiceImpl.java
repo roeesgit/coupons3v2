@@ -1,7 +1,6 @@
 package com.JbSchool.coupons3.app.beans.company.facade;
 
 import com.JbSchool.coupons3.app.beans.company.config.*;
-import com.JbSchool.coupons3.app.dto.*;
 import com.JbSchool.coupons3.app.utils.*;
 import lombok.*;
 import org.springframework.stereotype.*;
@@ -14,8 +13,8 @@ import java.util.*;
 public class CompanyServiceImpl implements CompanyService {
   
   
-  private final CompanyRepo        companyRepo;
-  private final CouponExcValidator couponExcValidator;
+  private final CompanyRepo      companyRepo;
+  private final CompanyValidator companyValidator;
   
   private final PersistenceCouponUser persistenceCouponUser;
   private final Mapper                mapper;
@@ -25,7 +24,9 @@ public class CompanyServiceImpl implements CompanyService {
   
   @Override
 //  @Transactional
-  public UserDto addCompany(Company company) {
+  public CompanyDto addCompany(Company company) throws CouponException {
+    System.out.println(company);
+    this.companyValidator.addCompany(company);
     Company persistenceCompany = this.persistenceCouponUser.addCompany(company);
     return this.mapper.companyToUserDto(persistenceCompany);
   }
@@ -33,38 +34,40 @@ public class CompanyServiceImpl implements CompanyService {
   
   @Override
 //  @Transactional
-  public void updateCompany(Company company, int companyId) throws CouponException {
+  public CompanyDto updateCompany(Company company, int companyId) throws CouponException {
     //todo לבדוק אם אפשר לקצר 3 קריאות לDB ע"י QUERY
-    Company companyFromDb =  this.couponExcValidator.getOptionalCompany(companyId);
+    this.companyValidator.updateCompany(company,companyId);
+    Company companyFromDb =  this.companyValidator.getOptionalCompany(companyId);
     
-      this.persistenceCouponUser.updateCompany(company, companyFromDb);
+     companyFromDb = this.persistenceCouponUser.updateCompany(company, companyFromDb);
+      return this.mapper.companyToUserDto(companyFromDb);
   }
   
   
   @Override
   @Transactional
   public void deleteCompany(int id) throws CouponException {
-    Company company = this.couponExcValidator.getOptionalCompany(id);
+    Company company = this.companyValidator.getOptionalCompany(id);
     this.persistenceCouponUser.deleteCompany(id, company.getEmail());
   }
   
   
   @Override
-  public UserDto getSingleCompany(int id) throws CouponException {
-    Company companyFromDb = this.companyRepo.findById(id).orElseThrow(() -> new CouponException(ErrorMessageProvider.ID_NOT_FOUND.getMessage()));
+  public CompanyDto getSingleCompany(int id) throws CouponException {
+    Company companyFromDb = this.companyValidator.getOptionalCompany(id);
     return this.mapper.companyToUserDto(companyFromDb);
   }
   
   
   @Override
-  public List <UserDto> getAllCompanies() {
+  public List <CompanyDto> getAllCompanies() {
     return this.mapper.companyListToUserDtoList(this.companyRepo.findAll());
   }
   
   
   @Override
-  public UserDto getLoggedCompany() throws CouponException {
-    Company company = this.couponExcValidator.getOptionalCompany(
+  public CompanyDto getLoggedCompany() throws CouponException {
+    Company company = this.companyValidator.getOptionalCompany(
       this.mapper.userIdFromSCH()
     );
     return this.mapper.companyToUserDto(company);

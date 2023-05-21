@@ -2,7 +2,6 @@ package com.JbSchool.coupons3.app.beans.coupon.facade;
 
 import com.JbSchool.coupons3.app.beans.category.*;
 import com.JbSchool.coupons3.app.beans.coupon.config.*;
-import com.JbSchool.coupons3.app.dto.*;
 import com.JbSchool.coupons3.app.utils.*;
 import jakarta.validation.*;
 import lombok.*;
@@ -20,11 +19,11 @@ public class CouponController {
   
   
   @PostMapping
-  public CouponDto addCoupon(@RequestBody @Valid Coupon coupon) {
+  public CouponDto addCoupon(@RequestBody @Valid Coupon coupon) throws CouponException {
     return this.couponServiceImpl.addCoupon(coupon);
   }
   @PutMapping("/{id}")
-  public void updateCoupon(@RequestBody @Valid Coupon coupon , @PathVariable int id) throws CouponException {
+  public void updateCoupon(@RequestBody @Valid Coupon coupon , @PathVariable int id)   {
     this.couponServiceImpl.updateCoupon(coupon,id);
   }
   

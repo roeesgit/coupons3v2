@@ -10,7 +10,7 @@ public interface CouponUserRepo extends JpaRepository<CouponUser,Integer> {
   void deleteByUsername(String username);
   
   
-  
+  boolean existsByUsernameAndIdNot(String email, int id);
   
   
 }

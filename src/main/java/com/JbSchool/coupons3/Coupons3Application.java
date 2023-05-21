@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.*;
 import org.springframework.transaction.annotation.*;
 
-@SpringBootApplication @EnableJpaAuditing @EnableTransactionManagement
+@SpringBootApplication @EnableJpaAuditing
 public class Coupons3Application {
 
 	public static void main(String[] args) {

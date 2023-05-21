@@ -4,12 +4,13 @@ import com.JbSchool.coupons3.app.beans.category.*;
 import com.JbSchool.coupons3.app.beans.coupon.config.*;
 import com.JbSchool.coupons3.app.beans.purchase.*;
 import com.JbSchool.coupons3.app.beans.purchase.config.*;
-import com.JbSchool.coupons3.app.dto.*;
 import com.JbSchool.coupons3.app.utils.*;
 import lombok.*;
+import org.springframework.scheduling.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 
+import java.time.*;
 import java.util.*;
 import java.util.stream.*;
 @Service
@@ -18,23 +19,23 @@ public class CouponServiceImpl implements CouponService {
   
   private final CouponRepo couponRepo;
   
-  private final Mapper             mapper;
-  private final CouponExcValidator couponExcValidator;
-  private final PurchaseService    purchaseService;
+  private final Mapper          mapper;
+  private final CouponValidator couponValidator;
+  private final PurchaseService purchaseService;
   
   
   @Override
-  public CouponDto addCoupon(Coupon coupon) {
+  public CouponDto addCoupon(Coupon coupon) throws CouponException {
     coupon.setCompanyId(mapper.userIdFromSCH());
+    this.couponValidator.addCoupon(coupon);
     this.couponRepo.save(coupon);
     return this.mapper.couponToCouponDto(coupon);
   }
   
-  
+  //todo ולידציה
   @Override
-  public void updateCoupon(Coupon coupon, int id) throws CouponException {
+  public void updateCoupon(Coupon coupon, int id)   {
     int companyId = mapper.userIdFromSCH();
-    this.couponExcValidator.ownedByCompany(id, companyId);
     coupon.setId(id);
     coupon.setCompanyId(companyId);
     this.couponRepo.save(coupon);
@@ -45,7 +46,7 @@ public class CouponServiceImpl implements CouponService {
   @Override
   @Transactional
   public void deleteCoupon(int id) throws CouponException {
-    this.couponExcValidator.ownedByCompany(id, mapper.userIdFromSCH());
+    this.couponValidator.deleteCoupon(id ,this.mapper.userIdFromSCH());
     this.purchaseService.removePurchaseByCouponId(id);
     this.couponRepo.deleteById(id);
   }
@@ -94,11 +95,12 @@ public class CouponServiceImpl implements CouponService {
   @Override
   @Transactional
   public void buyCoupon(Coupon coupon, int customerId) throws CouponException {
-    this.couponExcValidator.buyCoupon(coupon,customerId);
-    coupon.setAmount(coupon.getAmount() - 1);
-    Purchase purchase = Purchase.builder().customerId(customerId).couponId(coupon.getId()).build();
+    Coupon couponFromDb = this.couponValidator.getOptionalCoupon(coupon.getId());
+    this.couponValidator.buyCoupon(couponFromDb,customerId);
+    couponFromDb.setAmount(couponFromDb.getAmount() - 1);
+    Purchase purchase = Purchase.builder().customerId(customerId).couponId(couponFromDb.getId()).build();
     this.purchaseService.addPurchase(purchase);
-    this.couponRepo.save(coupon);
+    this.couponRepo.save(couponFromDb);
   }
   
   @Override
@@ -106,5 +108,10 @@ public class CouponServiceImpl implements CouponService {
     return  this.couponRepo.findAll().stream().map(mapper::couponToCouponDto).collect(Collectors.toList());
   }
   
+  @Scheduled(cron ="@midnight")
+  @Transactional
+  public void deleteExpiredCoupons() {
+    this.couponRepo.deleteByEndDateLessThan(LocalDate.now());
+  }
   
 }

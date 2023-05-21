@@ -18,6 +18,6 @@ public class Category {
     private int id;
     
     @Column(name = "name")
-    @Enumerated(EnumType.STRING)
-    private CategoryProvider name;
+//    @Enumerated(EnumType.STRING)
+    private String name;
 }

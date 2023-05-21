@@ -9,7 +9,9 @@ import java.util.*;
 @Builder
 @NoArgsConstructor
 public class ErrorMessage {
-  
-  private Map <String, String> errors;
-  
+ 
+ private String error;
+ private String message;
+
+
 }

@@ -29,14 +29,13 @@ import java.util.*;
 public class Coupon {
   
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.IDENTITY )
   @EntityUniqueFieldConfig(tableName = "coupons",columnName = "id" , message = "Id already exist")
   private int id;
   
   
-  @Column(name = "category", nullable = false)
-  @Enumerated(EnumType.STRING)
-  private CategoryProvider category;
+  @Column(name = "category", nullable = false , updatable = false)
+  private String category;
   
   @Length(min = 3, max = 15, message = "Please provide a valid title between 3-15 char")
   @Column(name = "title", nullable = false)
@@ -47,6 +46,7 @@ public class Coupon {
   @Column(name = "description", nullable = false)
   private String description;
   
+  @FutureOrPresent(message = "date must be after today")
   @Column(name = "start_date", nullable = false)
   private LocalDate startDate;
   //todo !  valid date in service
@@ -69,12 +69,17 @@ public class Coupon {
   
   @CreatedDate
   @Column(updatable = false)
-  private LocalDateTime createdDate;
+  private LocalDate createdDate;
   @LastModifiedDate
-  private LocalDateTime lastModifiedDate;
+  private LocalDate lastModifiedDate;
   
   @Column(name = "company_id")
   private int companyId;
- 
   
+  @PrePersist
+  @PreUpdate
+  public void convertFieldsToLowercase() {
+    this.image = this.image.toLowerCase();
+    this.description = this.description.toLowerCase();
+  }
 }

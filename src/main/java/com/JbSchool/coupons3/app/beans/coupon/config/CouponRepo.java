@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 
+import java.time.*;
 import java.util.*;
 @Repository
 public interface CouponRepo extends JpaRepository <Coupon, Integer> {
@@ -19,7 +20,7 @@ public interface CouponRepo extends JpaRepository <Coupon, Integer> {
   
   List <Coupon> findByCompanyIdAndPriceLessThanEqual(int companyId, int price);
   
-  
+  void deleteByEndDateLessThan(LocalDate endDate);
   
   List <Coupon> findByCompanyId(int companyId);
   

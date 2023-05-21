@@ -3,7 +3,6 @@ package com.JbSchool.coupons3.app.utils;
 import com.JbSchool.coupons3.app.beans.company.config.*;
 import com.JbSchool.coupons3.app.beans.coupon.config.*;
 import com.JbSchool.coupons3.app.beans.customer.config.*;
-import com.JbSchool.coupons3.app.dto.*;
 import com.JbSchool.coupons3.security.auth.*;
 import com.JbSchool.coupons3.security.entites.users.*;
 import com.JbSchool.coupons3.security.token.*;
@@ -23,8 +22,8 @@ public class Mapper {
   private final CustomerRepo customerRepo;
   
   
-  public UserDto companyToUserDto(Company company) {
-    return UserDto.builder()
+  public CompanyDto companyToUserDto(Company company) {
+    return CompanyDto.builder()
       .id(company.getId())
       .name(company.getName())
       .email(company.getEmail())
@@ -70,22 +69,23 @@ public class Mapper {
   }
   
   
-  public UserDto customerToUserDto(Customer customer) {
-    return UserDto.builder()
+  public CustomerDto customerToCustomerDto(Customer customer) {
+    return CustomerDto.builder()
       .id(customer.getId())
-      .name(customer.getFirstName() + " "+ customer.getLastName())
+      .firstName(customer.getFirstName())
+      .lastName(customer.getLastName())
       .email(customer.getEmail())
       .build();
   }
   
   
-  public List<UserDto> companyListToUserDtoList(List<Company> companies) {
+  public List<CompanyDto> companyListToUserDtoList(List<Company> companies) {
    return companies.stream().map(this::companyToUserDto).collect(Collectors.toList());
   }
   
   
-  public List<UserDto> customerListToUserDtoList(List<Customer> customers) {
-    return customers.stream().map(this::customerToUserDto).collect(Collectors.toList());
+  public List<CustomerDto> customerListToCustomerDtoList(List<Customer> customers) {
+    return customers.stream().map(this::customerToCustomerDto).collect(Collectors.toList());
   
   }
   

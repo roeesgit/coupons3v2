@@ -1,14 +1,13 @@
 package com.JbSchool.coupons3.app.beans.coupon.config;
 
 import com.JbSchool.coupons3.app.beans.category.*;
-import com.JbSchool.coupons3.app.dto.*;
 import com.JbSchool.coupons3.app.utils.*;
 import org.springframework.transaction.annotation.*;
 
 import java.util.*;
 public interface CouponService {
   
-  CouponDto addCoupon(Coupon coupon);
+  CouponDto addCoupon(Coupon coupon) throws CouponException;
   
   void updateCoupon(Coupon coupon, int id) throws CouponException;
   

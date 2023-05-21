@@ -1,4 +1,4 @@
-package com.JbSchool.coupons3.app.dto;
+package com.JbSchool.coupons3.app.beans.customer.config;
 
 
 import lombok.*;
@@ -8,7 +8,8 @@ import lombok.*;
 @Builder
 @Data
 public class CustomerDto {
-  private String firsName;
+  private int id;
+  private String firstName;
   private String lastName;
   private String email;
   
