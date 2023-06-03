@@ -1,5 +1,6 @@
 package com.JbSchool.coupons3.security.auth;
 
+import com.JbSchool.coupons3.app.utils.*;
 import com.JbSchool.coupons3.security.entites.users.*;
 import com.JbSchool.coupons3.security.token.*;
 import lombok.*;
@@ -15,7 +16,7 @@ public class AuthService {
   private final CouponUserService     couponUserService;
   
   
-  public TokenDTO validateLoginDetails(LoginRequestDTO loginRequestDTO) {
+  public TokenDTO validateLoginDetails(LoginRequestDTO loginRequestDTO) throws CouponException {
     boolean isLoginDetailsValid = this.isLoginDetailsValid(loginRequestDTO);
     if (isLoginDetailsValid) {
       CouponUser user = this.couponUserService.loadUserByUsername(loginRequestDTO.getUsername());
@@ -28,7 +29,7 @@ public class AuthService {
   }
   
   
-  private boolean isLoginDetailsValid(LoginRequestDTO loginRequestDTO) {
+  private boolean isLoginDetailsValid(LoginRequestDTO loginRequestDTO) throws CouponException {
     try {
       this.authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(
@@ -37,8 +38,7 @@ public class AuthService {
         )
       );
     } catch (Exception e) {
-      System.out.println(e.getMessage());
-      return false;
+      throw new CouponException(ErrorMessageProvider.BAD_CREDENTIALS.getMessage());
     }
     return true;
   }

@@ -8,7 +8,7 @@ public interface CompanyService {
   CompanyDto addCompany(Company company) throws CouponException;
   
   
-  CompanyDto updateCompany(Company company,int companyId) throws CouponException;
+  void updateCompany(Company company,int companyId) throws CouponException;
   
   
   CompanyDto getSingleCompany(int id) throws CouponException;
@@ -21,6 +21,9 @@ public interface CompanyService {
   
   
   CompanyDto getLoggedCompany() throws CouponException;
+  
+  
+  CompanyDto findByEmail(String email);
   
   
 }

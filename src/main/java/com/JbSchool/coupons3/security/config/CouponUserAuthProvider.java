@@ -29,8 +29,6 @@ public class CouponUserAuthProvider {
   
   public void setAuthForCompany(CouponUser company) {
     List <CouponAuth> couponAuths = this.couponAuthRepo.findAll();
-    System.out.println("********* Test 4 **********");
-    
     CouponUserAuth roleCompany = CouponUserAuth.builder()
       .couponAuth(couponAuths.get(1)).couponUser(company).build();
     this.couponUserAuthRepo.save(roleCompany);

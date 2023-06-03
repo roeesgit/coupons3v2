@@ -21,8 +21,8 @@ public class CompanyController {
   }
   
   @PutMapping("/{companyId}")
-  public CompanyDto updateCompany(@RequestBody @Valid Company company, @PathVariable int companyId) throws CouponException {
-    return companyServiceImpl.updateCompany(company,companyId);
+  public void updateCompany(@RequestBody @Valid Company company, @PathVariable int companyId) throws CouponException {
+     companyServiceImpl.updateCompany(company,companyId);
   }
   
   @DeleteMapping("/{id}")
@@ -40,6 +40,11 @@ public class CompanyController {
   public CompanyDto getSingleCompany(@PathVariable int id) throws CouponException {
     return this.companyServiceImpl.getSingleCompany(id);
   }
+  
+//  @GetMapping("/company_name/{email}")
+//  public CompanyDto getSingleCompany(@PathVariable String email) throws CouponException {
+//    return this.companyServiceImpl.findByEmail(email);
+//  }
   @GetMapping("/loggedCompany")
   public CompanyDto getLoggedCompany() throws CouponException {
     return this.companyServiceImpl.getLoggedCompany();

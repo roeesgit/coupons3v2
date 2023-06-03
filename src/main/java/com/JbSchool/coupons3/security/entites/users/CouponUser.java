@@ -26,6 +26,7 @@ public class CouponUser implements UserDetails {
   
   private String username;
   private String password;
+  private String loggedUserName;
   
   @ToString.Exclude
   @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy = "couponUser")
@@ -63,5 +64,11 @@ public class CouponUser implements UserDetails {
     return true;
   }
   
-  
+  @PrePersist
+  @PreUpdate
+  public void convertFieldsToLowercase() {
+    this.username = this.username.toLowerCase();
+    // upperCas first letter
+    this.loggedUserName = this.loggedUserName.substring(0, 1).toUpperCase() + this.loggedUserName.substring(1);
+  }
 }

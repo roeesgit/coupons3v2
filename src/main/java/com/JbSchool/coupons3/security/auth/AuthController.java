@@ -1,5 +1,6 @@
 package com.JbSchool.coupons3.security.auth;
 
+import com.JbSchool.coupons3.app.utils.*;
 import com.JbSchool.coupons3.security.entites.users.*;
 import lombok.*;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +15,15 @@ public class AuthController {
   
   
   @PostMapping("/login")
-  public TokenDTO login(@RequestBody LoginRequestDTO loginRequestDTO) {
+  public TokenDTO login(@RequestBody LoginRequestDTO loginRequestDTO) throws CouponException {
     TokenDTO t = this.authService.validateLoginDetails(loginRequestDTO);
     System.out.println(t);
     return t;
+  }
+  
+  
+  @GetMapping("/isConnected")
+  public void isConnected() {
   }
   
   

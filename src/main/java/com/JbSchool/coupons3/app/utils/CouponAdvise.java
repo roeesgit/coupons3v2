@@ -12,14 +12,10 @@ public class CouponAdvise {
   @ExceptionHandler({CouponException.class, AuthenticationException.class})
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public ErrorMessage companyAdviseHandler(Exception e) {
-    ErrorMessage errorMessage = ErrorMessage.builder()
+    return ErrorMessage.builder()
       .error("Error")
       .message(e.getMessage())
       .build();
-    System.out.println("********* Test 1 **********");
-    System.out.println("********* companyAdviseHandler **********");
-    System.out.println(errorMessage.getMessage());
-    return errorMessage;
   }
   
   

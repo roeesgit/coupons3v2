@@ -28,19 +28,19 @@ public class CompanyServiceImpl implements CompanyService {
     System.out.println(company);
     this.companyValidator.addCompany(company);
     Company persistenceCompany = this.persistenceCouponUser.addCompany(company);
-    return this.mapper.companyToUserDto(persistenceCompany);
+    return this.mapper.companyToCompanyDto(persistenceCompany);
   }
   
   
   @Override
 //  @Transactional
-  public CompanyDto updateCompany(Company company, int companyId) throws CouponException {
+  public void updateCompany(Company company, int companyId) throws CouponException {
     //todo לבדוק אם אפשר לקצר 3 קריאות לDB ע"י QUERY
     this.companyValidator.updateCompany(company,companyId);
     Company companyFromDb =  this.companyValidator.getOptionalCompany(companyId);
     
-     companyFromDb = this.persistenceCouponUser.updateCompany(company, companyFromDb);
-      return this.mapper.companyToUserDto(companyFromDb);
+     /*companyFromDb = */this.persistenceCouponUser.updateCompany(company, companyFromDb);
+//      return this.mapper.companyToCompanyDto(companyFromDb);
   }
   
   
@@ -55,7 +55,7 @@ public class CompanyServiceImpl implements CompanyService {
   @Override
   public CompanyDto getSingleCompany(int id) throws CouponException {
     Company companyFromDb = this.companyValidator.getOptionalCompany(id);
-    return this.mapper.companyToUserDto(companyFromDb);
+    return this.mapper.companyToCompanyDto(companyFromDb);
   }
   
   
@@ -70,7 +70,13 @@ public class CompanyServiceImpl implements CompanyService {
     Company company = this.companyValidator.getOptionalCompany(
       this.mapper.userIdFromSCH()
     );
-    return this.mapper.companyToUserDto(company);
+    return this.mapper.companyToCompanyDto(company);
+  }
+  
+  
+  @Override
+  public CompanyDto findByEmail(String email) {
+    return this.mapper.companyToCompanyDto(this.companyRepo.findByEmail(email));
   }
   
   

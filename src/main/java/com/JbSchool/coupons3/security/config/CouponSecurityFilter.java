@@ -26,8 +26,8 @@ public class CouponSecurityFilter extends OncePerRequestFilter {
       String token = authHeader.substring(7);
       String userName = this.tokenConfig.getUserNameFromToken(token);
       if (userName != null) {
-        boolean isExpirationValid = this.tokenConfig.isExpirationTokenValid(token);
-        if (isExpirationValid) {
+//        boolean isExpirationValid = this.tokenConfig.isExpirationTokenValid(token);
+//        if (isExpirationValid) {
           CouponUser couponUser = this.couponUserService.loadUserByUsername(userName);
           if (couponUser != null) {
             UsernamePasswordAuthenticationToken auth =
@@ -35,7 +35,6 @@ public class CouponSecurityFilter extends OncePerRequestFilter {
                 couponUser, null,couponUser.getAuthorities()
               );
             SecurityContextHolder.getContext().setAuthentication(auth);
-          }
         }
       }
     }

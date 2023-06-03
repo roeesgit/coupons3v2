@@ -17,26 +17,26 @@ public interface CouponService {
   
   
   
-  List <Coupon> getCompanyCoupons();
+  List <CouponDto> getCompanyCoupons();
   
   
-  List <Coupon> getCustomerCoupons();
+  List <CouponDto> getCustomerCoupons();
   
   
-  List <Coupon> getCompanyCouponsByCategory(CategoryProvider categoryProvider);
+  List <CouponDto> getCompanyCouponsByCategory(CategoryProvider categoryProvider);
   
   
   
   
-  List <Coupon> getCustomerCouponsByCategory(CategoryProvider categoryProvider);
+  List <CouponDto> getCustomerCouponsByCategory(CategoryProvider categoryProvider);
   
-  List <Coupon> getCompanyCouponsByPrice(int price);
-  
-  
-  List <Coupon> getCustomerCouponsByPrice(int price);
+  List <CouponDto> getCompanyCouponsByPrice(int price);
   
   
-  List <Coupon> getValidCouponTOPurchaseForCustomer();
+  List <CouponDto> getCustomerCouponsByPrice(int price);
+  
+  
+  List <CouponDto> getValidCouponTOPurchaseForCustomer();
   
   
   @Transactional
@@ -44,6 +44,9 @@ public interface CouponService {
   
   
   List<CouponDto> getAll();
+  
+  
+  CouponDto getCouponById(int id) throws CouponException;
   
   
 }

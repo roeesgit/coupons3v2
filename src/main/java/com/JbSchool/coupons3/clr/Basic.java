@@ -10,6 +10,7 @@ import com.JbSchool.coupons3.security.entites.auth.*;
 import com.JbSchool.coupons3.security.entites.users.*;
 import lombok.*;
 import org.springframework.boot.*;
+import org.springframework.data.domain.*;
 import org.springframework.security.crypto.password.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
@@ -45,7 +46,6 @@ public class Basic implements CommandLineRunner {
   
   
   private void initAll() {
-  
   initAdminOnly();
     initCategories();
     System.out.println("Categories Done");
@@ -65,8 +65,9 @@ public class Basic implements CommandLineRunner {
   private void initAdminOnly() {
     initCouponUsersAuth();
     CouponUser admin = CouponUser.builder()
-      .password(passwordEncoder.encode("admin@admin.com"))
-      .username("Admin12#$")
+      .password(passwordEncoder.encode("Admin12#$"))
+      .username("admin@admin.com")
+      .loggedUserName("Admin")
       .build();
   
     this.couponUserRepo.save(admin);
@@ -102,22 +103,23 @@ public class Basic implements CommandLineRunner {
   private void initCompaniesAndCoupons() {
     int picNum = 0;
     int COMPANIES = 10;
+    List <String> companyNames = List.of("Zara", "American Eagle", "pull&bear", "Golf", "Renuar");
+    List<String> titles = List.of("2 for 1 shirt", "tops", "jackets", "underwear", "shoes") ;
+    List<String> descriptions = List.of("buy 1 get the second for free", "varies women tops 30% off"
+      , "for limited time only", "women & men underwear 50% off", "37 and under, anna its for you 😉");
     List <Coupon> coupons = new ArrayList <>();
-    int COUPONS = 50;
+    int COUPONS = 130;
     for (int i = 0; i < COMPANIES; i++) {
       Company company = new Company();
       company.setName("Company name " + (i + 1));
+//      company.setName(companyNames.get(i));
       company.setEmail("companyEmail" + (i + 1) + "@gmail.com");
-      company.setPassword(passwordEncoder.encode("12345"));
-      if (i == 0) {
-        company.setName("TEST");
-        company.setEmail("aaaaa");
-        company.setPassword(passwordEncoder.encode("aaaaa"));
-      }
+      company.setPassword(passwordEncoder.encode("Company12#$"));
       CouponUser companyUser = CouponUser.builder()
         .password(company.getPassword())
         .username(company.getEmail())
-        .build();
+        .loggedUserName(company.getName())
+          .build();
       couponUserRepo.save(companyUser);
       companyRepo.save(company);
       this.couponUserAuthProvider.setAuthForCompany(companyUser);
@@ -132,18 +134,20 @@ public class Basic implements CommandLineRunner {
             [(random.nextInt(CategoryProvider.values().length - 1) + 1)]
             .toString().toLowerCase());
         coupon.setTitle("Company{"+company.getId()+ "} title " + (j + 1));
+//        coupon.setTitle(titles.get(j));
         coupon.setDescription("description " + (j + 1));
+//        coupon.setDescription(descriptions.get(j));
         coupon.setStartDate(LocalDate.now().plusDays(ranDays));
         picNum++;
         String pics =  "https://picsum.photos/seed/"+picNum+"/150/150";
         coupon.setImage(pics);
-        coupon.setPrice(random.nextInt(1945) + 55);
-        if (i == 0 && j == 0) {
-          coupon.setCategory(CategoryProvider.values()[0].toString().toLowerCase());
-          coupon.setTitle("TEST " + (j + 1));
-          coupon.setAmount(random.nextInt(3) + 1);
-          coupon.setEndDate(LocalDate.now().minusDays(1));
-        }
+        coupon.setPrice(random.nextInt(1900) + 100);
+//        if (i == 0 && j == 0) {
+//          coupon.setCategory(CategoryProvider.values()[0].toString().toLowerCase());
+//          coupon.setTitle("TEST " + (j + 1));
+//          coupon.setAmount(random.nextInt(3) + 1);
+//          coupon.setEndDate(LocalDate.now().minusDays(1));
+//        }
         coupons.add(coupon);
       }
     }
@@ -160,18 +164,12 @@ public class Basic implements CommandLineRunner {
         .firstName("first name " + (i + 1))
         .lastName("last name " + (i + 1))
         .email("customerEmail" + (i + 1) + "@gmail.com")
-        .password(this.passwordEncoder.encode("12345"))
+        .password(this.passwordEncoder.encode("Customer12#$"))
         .build();
-      if (i == 0) {
-        customer.setFirstName("TEST");
-        customer.setLastName("Testy");
-        customer.setEmail("zzzzz");
-        customer.setPassword(this.passwordEncoder.encode("zzzzz"));
-      }
-      
       CouponUser customerUser = CouponUser.builder()
         .password(customer.getPassword())
         .username(customer.getEmail())
+        .loggedUserName(customer.getFirstName())
         .build();
       this.customerRepo.save(customer);
       this.couponUserRepo.save(customerUser);

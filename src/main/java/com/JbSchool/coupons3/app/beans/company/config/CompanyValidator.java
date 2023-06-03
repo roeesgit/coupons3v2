@@ -32,10 +32,10 @@ public class CompanyValidator {
   }
   
   private void companyParams(Company company , int id , boolean isAdd) throws CouponException {
-    Company companyFromDb = getOptionalCompany(id);
     if (isAdd) {
       this.couponUserValidator.addEmail(company.getEmail());
     }else {
+      Company companyFromDb = getOptionalCompany(id);
       this.couponUserValidator.updateEmail(companyFromDb.getEmail() , company.getEmail());
     }
     if (this.companyRepo.existsByNameAndIdNot(company.getName(),id)) {

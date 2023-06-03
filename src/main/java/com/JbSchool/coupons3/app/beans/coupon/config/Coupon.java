@@ -30,36 +30,33 @@ public class Coupon {
   
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY )
-  @EntityUniqueFieldConfig(tableName = "coupons",columnName = "id" , message = "Id already exist")
   private int id;
   
   
-  @Column(name = "category", nullable = false , updatable = false)
+  @Column(name = "category", nullable = false/* , updatable = false*/)
   private String category;
   
-  @Length(min = 3, max = 15, message = "Please provide a valid title between 3-15 char")
+  @Length(min = 3, max = 20, message = "Please provide a valid title between 3-20 char")
   @Column(name = "title", nullable = false)
-  @EntityUniqueFieldConfig(tableName = "coupons",columnName = "title" , message = "Company already have coupon with the same title")
   private String title;
   
   @Length(min = 15, max = 100, message = "Please provide a valid user name between 15-100 char")
   @Column(name = "description", nullable = false)
   private String description;
   
-  @FutureOrPresent(message = "date must be after today")
+//  @FutureOrPresent(message = "date must be after today")
   @Column(name = "start_date", nullable = false)
   private LocalDate startDate;
-  //todo !  valid date in service
   @Column(name = "end_date", nullable = false)
   private LocalDate endDate;
 
-  @Min(value = 10,message = "Minimum amount is 10")
-  @Max(value = 500,message = "Maximum amount is 1000")
+  @Min(value = 100,message = "Minimum amount is 100")
+  @Max(value = 1000,message = "Maximum amount is 1000")
   @Column(name = "amount", nullable = false)
   private int amount;
   
-  @Min(value = 10,message = "Minimum amount is 10")
-  @Max(value = 500,message = "Maximum amount is 1000")
+  @Min(value = 3,message = "Minimum amount is 100")
+  @Max(value = 2000,message = "Maximum amount is 2000")
   @Column(name = "price", nullable = false)
   private double price;
   
@@ -69,9 +66,9 @@ public class Coupon {
   
   @CreatedDate
   @Column(updatable = false)
-  private LocalDate createdDate;
+  private LocalDateTime createdDate;
   @LastModifiedDate
-  private LocalDate lastModifiedDate;
+  private LocalDateTime lastModifiedDate;
   
   @Column(name = "company_id")
   private int companyId;

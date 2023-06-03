@@ -53,4 +53,12 @@ public class CustomerServiceImpl implements CustomerService {
     Customer customer = this.customerValidator.getOptionalCustomer(this.mapper.userIdFromSCH());
     return this.mapper.customerToCustomerDto(customer);
   }
+  
+  
+  @Override
+  public CustomerDto findByEmail(String email) {
+    return this.mapper.customerToCustomerDto(this.customerRepo.findByEmail(email));
+  }
+  
+  
 }

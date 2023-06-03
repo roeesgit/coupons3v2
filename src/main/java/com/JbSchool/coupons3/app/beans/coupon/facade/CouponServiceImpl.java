@@ -32,86 +32,100 @@ public class CouponServiceImpl implements CouponService {
     return this.mapper.couponToCouponDto(coupon);
   }
   
+  
   //todo ולידציה
   @Override
-  public void updateCoupon(Coupon coupon, int id)   {
+  public void updateCoupon(Coupon coupon, int id) throws CouponException {
     int companyId = mapper.userIdFromSCH();
+    this.couponValidator.updateCoupon(coupon);
     coupon.setId(id);
     coupon.setCompanyId(companyId);
     this.couponRepo.save(coupon);
   }
-
-
+  
   
   @Override
   @Transactional
   public void deleteCoupon(int id) throws CouponException {
-    this.couponValidator.deleteCoupon(id ,this.mapper.userIdFromSCH());
+    this.couponValidator.deleteCoupon(id, this.mapper.userIdFromSCH());
     this.purchaseService.removePurchaseByCouponId(id);
     this.couponRepo.deleteById(id);
   }
   
-
   
   @Override
-  public List <Coupon> getCompanyCoupons() {
-    return this.couponRepo.findByCompanyId(mapper.userIdFromSCH());
+  public List <CouponDto> getCompanyCoupons() {
+    return this.mapper.couponsToCouponsDto(this.couponRepo.findByCompanyId(mapper.userIdFromSCH()));
   }
   
   
   @Override
-  public List <Coupon> getCompanyCouponsByCategory(CategoryProvider categoryProvider) {
-    return this.couponRepo.findByCompanyIdAndCategory(mapper.userIdFromSCH(), categoryProvider);
+  public List <CouponDto> getCompanyCouponsByCategory(CategoryProvider categoryProvider) {
+    return this.mapper.couponsToCouponsDto(this.couponRepo.findByCompanyIdAndCategory(mapper.userIdFromSCH(), categoryProvider));
   }
   
   
   @Override
-  public List <Coupon> getCompanyCouponsByPrice(int price) {
-    return this.couponRepo.findByCompanyIdAndPriceLessThanEqual(mapper.userIdFromSCH(), price);
+  public List <CouponDto> getCompanyCouponsByPrice(int price) {
+    return this.mapper.couponsToCouponsDto(this.couponRepo.findByCompanyIdAndPriceLessThanEqual(mapper.userIdFromSCH(), price));
   }
   
   
   @Override
-  public List <Coupon> getCustomerCoupons() {
-    return this.couponRepo.getCustomerCoupons(mapper.userIdFromSCH());
-  }
-  
-  @Override
-  public List <Coupon> getCustomerCouponsByCategory(CategoryProvider categoryProvider) {
-    return this.couponRepo.getCustomerCouponsByCategory(mapper.userIdFromSCH(),categoryProvider);
+  public List <CouponDto> getCustomerCoupons() {
+    return this.mapper.couponsToCouponsDto(this.couponRepo.getCustomerCoupons(mapper.userIdFromSCH()));
   }
   
   
   @Override
-  public List <Coupon> getCustomerCouponsByPrice(int  price) {
-    return this.couponRepo.getCustomerCoupons(mapper.userIdFromSCH());
+  public List <CouponDto> getCustomerCouponsByCategory(CategoryProvider categoryProvider) {
+    return this.mapper.couponsToCouponsDto(this.couponRepo.getCustomerCouponsByCategory(mapper.userIdFromSCH(), categoryProvider));
   }
   
   
   @Override
-  public List <Coupon> getValidCouponTOPurchaseForCustomer() {
-    return this.couponRepo.getValidCouponTOPurchaseForCustomer(mapper.userIdFromSCH());
+  public List <CouponDto> getCustomerCouponsByPrice(int price) {
+    return this.mapper.couponsToCouponsDto(this.couponRepo.getCustomerCoupons(mapper.userIdFromSCH()));
   }
+  
+  
+  @Override
+  public List <CouponDto> getValidCouponTOPurchaseForCustomer() {
+    List <Coupon> coupons = this.couponRepo.getValidCouponTOPurchaseForCustomer(mapper.userIdFromSCH());
+    return this.mapper.couponsToCouponsDto(this.couponRepo.getValidCouponTOPurchaseForCustomer(mapper.userIdFromSCH()));
+  }
+  
+  /*
+  *
+  * */
   @Override
   @Transactional
   public void buyCoupon(Coupon coupon, int customerId) throws CouponException {
     Coupon couponFromDb = this.couponValidator.getOptionalCoupon(coupon.getId());
-    this.couponValidator.buyCoupon(couponFromDb,customerId);
+    this.couponValidator.buyCoupon(couponFromDb, customerId);
     couponFromDb.setAmount(couponFromDb.getAmount() - 1);
     Purchase purchase = Purchase.builder().customerId(customerId).couponId(couponFromDb.getId()).build();
     this.purchaseService.addPurchase(purchase);
     this.couponRepo.save(couponFromDb);
   }
   
+  
   @Override
-  public List<CouponDto> getAll() {
-    return  this.couponRepo.findAll().stream().map(mapper::couponToCouponDto).collect(Collectors.toList());
+  public List <CouponDto> getAll() {
+    return this.couponRepo.findAll().stream().map(mapper::couponToCouponDto).collect(Collectors.toList());
   }
   
-  @Scheduled(cron ="@midnight")
+  
+  @Scheduled(cron = "@midnight")
   @Transactional
   public void deleteExpiredCoupons() {
     this.couponRepo.deleteByEndDateLessThan(LocalDate.now());
   }
+  
+  @Override
+  public CouponDto getCouponById(int id) throws CouponException {
+    return this.mapper.couponToCouponDto(this.couponValidator.getOptionalCoupon(id));
+  }
+  
   
 }

@@ -32,15 +32,17 @@ public class CouponsSecurityConfig {
           reg.requestMatchers(HttpMethod.GET , "/api/v1/coupons/all").permitAll();
   
           // COMPANIES
-          reg.requestMatchers("/api/v1/companies/loggedCompany").hasAuthority( "ROLE_COMPANY");
+          reg.requestMatchers("/api/v1/companies/company_name/{email}").hasAuthority( "ROLE_COMPANY");
+//          reg.requestMatchers("/api/v1/companies/loggedCompany").hasAuthority( "ROLE_COMPANY");
           reg.requestMatchers("/api/v1/companies/**").hasAuthority("ROLE_ADMIN");
           
           // CUSTOMERS
-          reg.requestMatchers( "/api/v1/customers/loggedCustomer").hasAuthority("ROLE_CUSTOMER");
+//          reg.requestMatchers( "/api/v1/customers/{email}").hasAuthority("ROLE_CUSTOMER");
+//          reg.requestMatchers( "/api/v1/customers/loggedCustomer").hasAuthority("ROLE_CUSTOMER");
           reg.requestMatchers("/api/v1/customers/**").hasAuthority("ROLE_ADMIN");
           
           // COUPONS
-          reg.requestMatchers( "/api/v1/coupons/customer/**").hasAuthority("ROLE_CUSTOMER");
+          reg.requestMatchers("/api/v1/coupons/customer/**").hasAuthority("ROLE_CUSTOMER");
           reg.requestMatchers( "/api/v1/coupons/**").hasAuthority("ROLE_COMPANY");
           
           //ANY UNSPECIFIED

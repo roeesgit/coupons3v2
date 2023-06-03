@@ -1,5 +1,6 @@
-package com.JbSchool.coupons3.app.beans.category;
+package com.JbSchool.coupons3.app.beans.category.facade;
 
+import com.JbSchool.coupons3.app.beans.category.*;
 import lombok.*;
 import org.springframework.web.bind.annotation.*;
 

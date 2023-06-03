@@ -62,6 +62,9 @@ public interface CouponRepo extends JpaRepository <Coupon, Integer> {
   )
   void deleteCompanyCouponsPurchases( int companyId);
   
+  boolean existsByTitleAndIdNotAndCompanyId(String title, int id, int companyId);
+  
+  
   
   
   

@@ -11,16 +11,16 @@ import java.time.*;
 @Data
 public class CouponDto {
   
-  private String category;
   
   private int id;
+  private String category;
   private String    title;
   private String    description;
-  private LocalDate endDate;
   private LocalDate startDate;
+  private LocalDate endDate;
   private int       amount;
   private double    price;
   private String    image;
-  
+  private int companyId;
   
 }

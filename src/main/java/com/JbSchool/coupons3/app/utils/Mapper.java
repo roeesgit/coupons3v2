@@ -17,17 +17,22 @@ import java.util.stream.*;
 @RequiredArgsConstructor
 public class Mapper {
   
-  private final TokenConfig tokenConfig;
-  private final CompanyRepo companyRepo;
+  private final TokenConfig  tokenConfig;
+  private final CompanyRepo  companyRepo;
   private final CustomerRepo customerRepo;
   
   
-  public CompanyDto companyToUserDto(Company company) {
+  public CompanyDto companyToCompanyDto(Company company) {
     return CompanyDto.builder()
       .id(company.getId())
       .name(company.getName())
       .email(company.getEmail())
       .build();
+  }
+  
+  
+  public List <CouponDto> couponsToCouponsDto(List <Coupon> coupons) {
+    return coupons.stream().map(this::couponToCouponDto).collect(Collectors.toList());
   }
   
   
@@ -43,13 +48,15 @@ public class Mapper {
   public CouponDto couponToCouponDto(Coupon coupon) {
     return CouponDto.builder()
       .id(coupon.getId())
+      .category(coupon.getCategory())
       .title(coupon.getTitle())
       .description(coupon.getDescription())
-      .category(coupon.getCategory())
+      .startDate(coupon.getStartDate())
+      .endDate(coupon.getEndDate())
       .amount(coupon.getAmount())
       .price(coupon.getPrice())
       .image(coupon.getImage())
-      .endDate(coupon.getEndDate())
+      .companyId(coupon.getCompanyId())
       .build();
   }
   
@@ -79,14 +86,14 @@ public class Mapper {
   }
   
   
-  public List<CompanyDto> companyListToUserDtoList(List<Company> companies) {
-   return companies.stream().map(this::companyToUserDto).collect(Collectors.toList());
+  public List <CompanyDto> companyListToUserDtoList(List <Company> companies) {
+    return companies.stream().map(this::companyToCompanyDto).collect(Collectors.toList());
   }
   
   
-  public List<CustomerDto> customerListToCustomerDtoList(List<Customer> customers) {
+  public List <CustomerDto> customerListToCustomerDtoList(List <Customer> customers) {
     return customers.stream().map(this::customerToCustomerDto).collect(Collectors.toList());
-  
+    
   }
   
   

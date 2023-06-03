@@ -19,4 +19,7 @@ public interface CustomerService {
   CustomerDto getLoggedCustomer() throws CouponException;
   
   
+  CustomerDto findByEmail(String email);
+  
+  
 }

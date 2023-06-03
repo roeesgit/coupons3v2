@@ -39,6 +39,7 @@ public class Company {
   @Column(name = "email", nullable = false)
   private String email;
   
+  @Length(min = 3, max = 70, message = "Please provide a valid password between 3-70 char")
   @Pattern(
     regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?!.*\\s).{8,}$"
     ,message =

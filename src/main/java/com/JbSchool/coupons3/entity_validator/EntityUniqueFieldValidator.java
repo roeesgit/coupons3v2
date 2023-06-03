@@ -38,17 +38,6 @@ public class EntityUniqueFieldValidator implements ConstraintValidator <EntityUn
   
   @Override
   public boolean isValid(Object value, ConstraintValidatorContext context) {
-    System.out.println(request.getPathInfo());
-     // TODO: 11/22/2022 test
-           System.out.println("********* Test 1 **********");
-           System.out.println();
-           System.out.println("********* Test 2 **********");
-           System.out.println();
-request.getParameterMap().forEach((k,v)-> System.out.println("key: "+k+"\nvalue: "+ Arrays.toString(v)));
-   
-    Company company =context.unwrap(HibernateConstraintValidatorContext.class)
-      .getConstraintValidatorPayload(Company.class);
-    System.out.println("HibernateConstraintValidatorContext"+ HibernateConstraintValidatorContext.class);
     int SCHid = this.mapper.userIdFromSCH();
     switch (this.tableName) {
     case "companies":

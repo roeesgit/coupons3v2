@@ -32,22 +32,19 @@ public class PersistenceCouponUser {
       company.setPassword(passwordEncoder.encode(company.getPassword()));
       CouponUser couponUser = CouponUser.builder()
         .username(company.getEmail())
-        .password(company.getPassword()).build();
-       // TODO: 11/22/2022 test
-      System.out.println("********* Test 1 **********");
+        .password(company.getPassword())
+        .loggedUserName(company.getName())
+        .build();
       this.companyRepo.save(company);
-             System.out.println("********* Test 2 **********");
       this.couponUserRepo.save(couponUser);
-      System.out.println("********* Test 3 **********");
       this.couponUserAuthProvider.setAuthForCompany(couponUser);
-
     return company;
     
   }
   
   
   @Transactional
-  public Company updateCompany(Company company, Company companyFromDb) {
+  public void updateCompany(Company company, Company companyFromDb) {
     
     company.setPassword(passwordEncoder.encode(company.getPassword()));
     company.setId(companyFromDb.getId());
@@ -55,7 +52,7 @@ public class PersistenceCouponUser {
     couponUser.setUsername(company.getEmail());
     couponUser.setPassword(company.getPassword());
     this.companyRepo.save(company);
-    return company;
+//    return company;
   }
   
   @Transactional
@@ -76,7 +73,8 @@ public class PersistenceCouponUser {
     CouponUser couponUser = CouponUser.builder()
       .username(customer.getEmail())
       .password(customer.getPassword())
-      
+      .loggedUserName(customer.getFirstName())
+  
       .build();
     this.customerRepo.save(customer);
     this.couponUserRepo.save(couponUser);
@@ -92,6 +90,7 @@ public class PersistenceCouponUser {
     CouponUser couponUser = couponUserRepo.findByUsername(customerFromDb.getEmail());
     couponUser.setUsername(customer.getEmail());
     couponUser.setPassword(customer.getPassword());
+    couponUser.setLoggedUserName(customer.getFirstName());
     this.couponUserRepo.save(couponUser);
     this.customerRepo.save(customer);
     return customer;
