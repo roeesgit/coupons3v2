@@ -6,6 +6,10 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.context.annotation.*;
 
+/**
+ * Represents a purchase in the system.
+ */
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

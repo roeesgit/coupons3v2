@@ -1,3 +1,7 @@
+/**
+ 
+ Data transfer object for a login request.
+ */
 package com.JbSchool.coupons3.security.auth;
 
 import lombok.*;

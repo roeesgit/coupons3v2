@@ -3,6 +3,10 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.context.annotation.*;
 
+/**
+ * Entity class representing the authorization settings for a coupon.
+ */
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

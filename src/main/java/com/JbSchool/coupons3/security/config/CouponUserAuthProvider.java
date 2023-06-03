@@ -1,3 +1,7 @@
+/**
+ 
+ CouponUserAuthProvider class is responsible for setting up the authentication roles for different types of users.
+ */
 package com.JbSchool.coupons3.security.config;
 
 import com.JbSchool.coupons3.security.entites.auth.*;
@@ -14,7 +18,11 @@ public class CouponUserAuthProvider {
   private final CouponAuthRepo     couponAuthRepo;
   private final CouponUserAuthRepo couponUserAuthRepo;
   
-  
+  /**
+   
+   Sets up the authentication roles for an admin user.
+   @param admin the CouponUser object representing the admin user
+   */
   public void setAuthForAdmin(CouponUser admin) {
     List <CouponAuth> couponAuths = this.couponAuthRepo.findAll();
     
@@ -26,7 +34,11 @@ public class CouponUserAuthProvider {
     this.couponUserAuthRepo.save(specialPermission);
   }
   
-  
+  /**
+   
+   Sets up the authentication roles for a company user.
+   @param company the CouponUser object representing the company user
+   */
   public void setAuthForCompany(CouponUser company) {
     List <CouponAuth> couponAuths = this.couponAuthRepo.findAll();
     CouponUserAuth roleCompany = CouponUserAuth.builder()
@@ -34,7 +46,11 @@ public class CouponUserAuthProvider {
     this.couponUserAuthRepo.save(roleCompany);
   }
   
-  
+  /**
+   
+   Sets up the authentication roles for a customer user.
+   @param customer the CouponUser object representing the customer user
+   */
   public void setAuthForCustomer(CouponUser customer) {
     List <CouponAuth> couponAuths = this.couponAuthRepo.findAll();
     

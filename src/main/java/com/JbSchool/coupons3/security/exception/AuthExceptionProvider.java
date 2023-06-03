@@ -1,3 +1,8 @@
+/**
+ 
+ AuthExceptionProvider is an enumeration of authentication exception providers.
+ It contains predefined messages for common authentication exceptions.
+ */
 package com.JbSchool.coupons3.security.exception;
 
 

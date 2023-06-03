@@ -1,10 +1,12 @@
 package com.JbSchool.coupons3.app.beans.coupon.config;
 
-import com.JbSchool.coupons3.app.beans.category.*;
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.*;
+/**
+ 
+ The CouponDto class represents a data transfer object for the Coupon entity.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

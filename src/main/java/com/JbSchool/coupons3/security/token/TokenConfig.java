@@ -1,3 +1,7 @@
+/**
+ 
+ TokenConfig is responsible for generating and validating JWT tokens.
+ */
 package com.JbSchool.coupons3.security.token;
 
 import com.JbSchool.coupons3.security.entites.users.*;
@@ -16,7 +20,12 @@ public class TokenConfig {
     this.secretKey = appSecretToken;
   }
   
-  
+  /**
+   
+   Generates a JWT token based on the provided claims.
+   @param claims the claims to include in the token
+   @return the generated JWT token
+   */
   public String generateToken(Map <String, Object> claims) {
      // TODO: 11/22/2022 test
     System.out.println(System.currentTimeMillis()  + (1000*20) );
@@ -30,21 +39,13 @@ public class TokenConfig {
   }
   
   
-//  public boolean isExpirationTokenValid(String token) {
-//    return new Date().before(this.getExpirationFromToken(token));
-//  }
-  
-//  public Date getExpirationFromToken(String token) {
-//    try {
-//      return Jwts.parser()
-//        .setSigningKey(secretKey)
-//        .parseClaimsJws(token)
-//        .getBody().getExpiration();
-//    } catch (Exception e) {
-//      return new Date(System.currentTimeMillis()-10000);
-//    }
-//  }
-  
+  /**
+   
+   Retrieves the username from the provided JWT token.
+   @param token the JWT token
+   @return the username retrieved from the token
+   @throws IOException if an error occurs while parsing the token
+   */
   public String getUserNameFromToken(String token) throws IOException {
     try {
       return Jwts.parser()
@@ -57,7 +58,12 @@ public class TokenConfig {
       throw new IOException(e.getMessage());
     }
   }
-  
+  /**
+   
+   Builds the claims to be included in the JWT token based on the provided user.
+   @param user the user for whom the token is generated
+   @return the claims for the token
+   */
   public Map<String, Object> buildClaims(CouponUser user/*,ListGrantedAuthority> auth*/) {
     Map<String, Object> claims = new HashMap<>();
     claims.put("auth" , user.getAuthorities());

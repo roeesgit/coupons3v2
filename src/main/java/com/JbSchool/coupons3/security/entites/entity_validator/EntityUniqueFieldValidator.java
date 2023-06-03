@@ -1,4 +1,4 @@
-package com.JbSchool.coupons3.entity_validator;
+package com.JbSchool.coupons3.security.entites.entity_validator;
 
 import com.JbSchool.coupons3.app.beans.company.config.*;
 import com.JbSchool.coupons3.app.beans.coupon.config.*;
@@ -7,11 +7,8 @@ import com.JbSchool.coupons3.app.utils.*;
 import jakarta.servlet.http.*;
 import jakarta.validation.*;
 import lombok.*;
-import org.hibernate.validator.constraintvalidation.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
-
-import java.util.*;
 @RequiredArgsConstructor
 public class EntityUniqueFieldValidator implements ConstraintValidator <EntityUniqueFieldConfig, Object> {
   
@@ -47,7 +44,6 @@ public class EntityUniqueFieldValidator implements ConstraintValidator <EntityUn
       case "name":
         return !this.companyRepo.existsByNameAndIdNot(value.toString(), SCHid);
       case "id":
-        // להוציא לפונקציה
         return !isUpdate || this.companyRepo.existsById(Integer.parseInt(value.toString()));
       }
       break;

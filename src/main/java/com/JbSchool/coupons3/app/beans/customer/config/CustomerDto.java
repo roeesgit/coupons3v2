@@ -2,7 +2,10 @@ package com.JbSchool.coupons3.app.beans.customer.config;
 
 
 import lombok.*;
-
+/**
+ 
+ Data Transfer Object (DTO) for representing a customer.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

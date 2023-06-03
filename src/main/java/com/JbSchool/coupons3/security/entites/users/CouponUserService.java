@@ -16,13 +16,25 @@ public class CouponUserService implements UserDetailsService {
   private final PasswordEncoder passwordEncoder;
   private final CouponUserRepo  couponUserRepo;
   
-  
+  /**
+   * Loads a coupon user by their username.
+   *
+   * @param username The username of the coupon user.
+   * @return The found coupon user.
+   * @throws UsernameNotFoundException If the coupon user is not found.
+   */
   @Override
   public CouponUser loadUserByUsername(String username) throws UsernameNotFoundException {
     return this.couponUserRepo.findByUsername(username);
   }
   
-  
+  /**
+   * Adds a new coupon user.
+   *
+   * @param user The coupon user to add.
+   * @return The generated token for the added user.
+   * @throws Exception If an error occurs during user addition.
+   */
   public TokenDTO addUser(CouponUser user) throws Exception {
     if (this.couponUserRepo.existsById(user.getId())) {
       throw new CouponException(AuthExceptionProvider.ID_ALREADY_EXIST.getMessage());

@@ -1,6 +1,5 @@
 package com.JbSchool.coupons3.clr;
 
-import com.JbSchool.coupons3.app.beans.category.*;
 import com.JbSchool.coupons3.app.beans.company.config.*;
 import com.JbSchool.coupons3.app.beans.coupon.facade.*;
 import org.springframework.beans.factory.annotation.*;

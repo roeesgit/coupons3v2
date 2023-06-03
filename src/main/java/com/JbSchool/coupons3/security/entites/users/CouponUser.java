@@ -1,3 +1,8 @@
+/**
+ 
+ Represents a user in the coupon management system.
+ for each entity (admin , company , customer) there is a corresponding couponUser in DB
+ */
 package com.JbSchool.coupons3.security.entites.users;
 
 import com.JbSchool.coupons3.security.entites.coupon_users_auth.*;
@@ -8,7 +13,11 @@ import org.springframework.security.core.*;
 import org.springframework.security.core.userdetails.*;
 
 import java.util.*;
-
+/**
+ 
+ Represents a user in the coupon management system.
+ for each entity (admin , company , customer) there is a corresponding couponUser in DB
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -63,12 +72,14 @@ public class CouponUser implements UserDetails {
   public boolean isEnabled() {
     return true;
   }
-  
+  /**
+   
+   Converts the fields to lowercase before persisting or updating the entity.
+   */
   @PrePersist
   @PreUpdate
   public void convertFieldsToLowercase() {
     this.username = this.username.toLowerCase();
-    // upperCas first letter
     this.loggedUserName = this.loggedUserName.substring(0, 1).toUpperCase() + this.loggedUserName.substring(1);
   }
 }

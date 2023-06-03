@@ -1,9 +1,5 @@
 package com.JbSchool.coupons3.app.beans.coupon.config;
 
-import com.JbSchool.coupons3.app.beans.category.*;
-import com.JbSchool.coupons3.app.beans.company.config.*;
-import com.JbSchool.coupons3.app.beans.purchase.config.*;
-import com.JbSchool.coupons3.entity_validator.*;
 import jakarta.persistence.*;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.*;
@@ -14,8 +10,10 @@ import org.springframework.data.annotation.*;
 import org.springframework.data.jpa.domain.support.*;
 
 import java.time.*;
-import java.util.*;
-
+/**
+ 
+ The Coupon class represents a coupon entity in the system.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -72,7 +70,10 @@ public class Coupon {
   
   @Column(name = "company_id")
   private int companyId;
-  
+  /**
+   
+   Converts fields to lowercase before persisting or updating the entity.
+   */
   @PrePersist
   @PreUpdate
   public void convertFieldsToLowercase() {

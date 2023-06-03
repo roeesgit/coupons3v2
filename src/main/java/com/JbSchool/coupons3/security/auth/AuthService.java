@@ -1,3 +1,7 @@
+/**
+ 
+ Service class for handling authentication-related operations.
+ */
 package com.JbSchool.coupons3.security.auth;
 
 import com.JbSchool.coupons3.app.utils.*;
@@ -14,9 +18,17 @@ public class AuthService {
   private final AuthenticationManager authenticationManager;
   private final TokenConfig           tokenConfig;
   private final CouponUserService     couponUserService;
-  
-  
-  public TokenDTO validateLoginDetails(LoginRequestDTO loginRequestDTO) throws CouponException {
+  /**
+   
+   Validates the login details provided by the user and generates a token if the details are valid.
+   
+   @param loginRequestDTO the login request data transfer object
+   
+   @return the token data transfer object
+   
+   @throws CouponException if an error occurs during the validation process
+   */
+    public TokenDTO validateLoginDetails(LoginRequestDTO loginRequestDTO) throws CouponException {
     boolean isLoginDetailsValid = this.isLoginDetailsValid(loginRequestDTO);
     if (isLoginDetailsValid) {
       CouponUser user = this.couponUserService.loadUserByUsername(loginRequestDTO.getUsername());
@@ -28,7 +40,13 @@ public class AuthService {
     return null;
   }
   
-  
+  /**
+   
+   Checks if the login details provided by the user are valid.
+   @param loginRequestDTO the login request data transfer object
+   @return true if the login details are valid, false otherwise
+   @throws CouponException if the login details are invalid
+   */
   private boolean isLoginDetailsValid(LoginRequestDTO loginRequestDTO) throws CouponException {
     try {
       this.authenticationManager.authenticate(

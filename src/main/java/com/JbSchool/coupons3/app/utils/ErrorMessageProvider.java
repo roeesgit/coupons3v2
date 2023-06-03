@@ -2,6 +2,10 @@ package com.JbSchool.coupons3.app.utils;
 
 import lombok.*;
 
+
+/**
+ * Enumeration providing predefined error messages.
+ */
 @Getter
 @AllArgsConstructor
 

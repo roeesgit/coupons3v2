@@ -6,6 +6,10 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.context.annotation.*;
 
+/**
+ * Represents the authentication information for a coupon user.
+ */
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -16,12 +20,20 @@ import org.springframework.context.annotation.*;
 @Scope("prototype")
 @Table(name = "users_auth")
 public class CouponUserAuth {
+  /**
+   * The ID of the coupon user authentication.
+   */
   @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-  
+  /**
+   * The associated coupon user.
+   */
   @OneToOne
   private CouponUser couponUser;
+  /**
+   * The associated coupon authentication.
+   */
   @OneToOne
   private CouponAuth couponAuth;
 }

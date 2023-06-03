@@ -1,6 +1,6 @@
 package com.JbSchool.coupons3.clr;
 
-import com.JbSchool.coupons3.app.beans.category.*;
+import com.JbSchool.coupons3.app.beans.category.config.*;
 import com.JbSchool.coupons3.app.beans.company.config.*;
 import com.JbSchool.coupons3.app.beans.coupon.config.*;
 import com.JbSchool.coupons3.app.beans.customer.config.*;
@@ -10,7 +10,6 @@ import com.JbSchool.coupons3.security.entites.auth.*;
 import com.JbSchool.coupons3.security.entites.users.*;
 import lombok.*;
 import org.springframework.boot.*;
-import org.springframework.data.domain.*;
 import org.springframework.security.crypto.password.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
@@ -176,9 +175,8 @@ public class Basic implements CommandLineRunner {
       this.couponUserAuthProvider.setAuthForCustomer(customerUser);
   
     }
+  
   }
-  
-  
   private void initPurchases() {
     List <Coupon> coupons = this.couponRepo.findAll();
     List <Customer> customers = this.customerRepo.findAll();

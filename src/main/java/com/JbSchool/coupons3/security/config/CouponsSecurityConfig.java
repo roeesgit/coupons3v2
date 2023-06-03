@@ -1,3 +1,7 @@
+/**
+ 
+ CouponsSecurityConfig class is responsible for configuring the security settings for the Coupons application.
+ */
 package com.JbSchool.coupons3.security.config;
 
 import lombok.*;
@@ -20,6 +24,17 @@ public class CouponsSecurityConfig {
   @Autowired
   @Qualifier("tokenAuthenticationEntryPoint")
   AuthenticationEntryPoint authEntryPoint;
+  
+  /**
+   
+   Configures the security filter chain and defines the authorization rules for different endpoints.
+   
+   @param httpSecurity the HttpSecurity object to configure the security
+   
+   @return the configured SecurityFilterChain
+   
+   @throws Exception if an exception occurs during the configuration
+   */
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
     return httpSecurity
@@ -57,12 +72,5 @@ public class CouponsSecurityConfig {
       .cors().and()
       .build();
   }
-//  @Bean
-//  public InMemoryUserDetailsManager userDetailsService() {
-//    UserDetails admin = User.withUsername("admin")
-//      .password("admin")
-//      .roles("ROLE_ADMIN")
-//      .build();
-//    return new InMemoryUserDetailsManager(admin);
-//  }
+
 }
