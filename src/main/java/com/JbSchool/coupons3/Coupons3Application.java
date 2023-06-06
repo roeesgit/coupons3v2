@@ -7,7 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.*;
 
 @SpringBootApplication @EnableJpaAuditing
+/*Main*/
 public class Coupons3Application {
+	/*Coupon service attribute */
 	@Autowired
 	private CouponServiceImpl couponService;
 	public static void main(String[] args) {

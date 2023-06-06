@@ -48,13 +48,13 @@ public class Coupon {
   @Column(name = "end_date", nullable = false)
   private LocalDate endDate;
 
-  @Min(value = 100,message = "Minimum amount is 100")
+  @Min(value = 50,message = "Minimum amount is 50")
   @Max(value = 1000,message = "Maximum amount is 1000")
   @Column(name = "amount", nullable = false)
   private int amount;
   
-  @Min(value = 3,message = "Minimum amount is 100")
-  @Max(value = 2000,message = "Maximum amount is 2000")
+  @Min(value = 5,message = "Minimum amount is 5")
+  @Max(value = 300,message = "Maximum amount is 300")
   @Column(name = "price", nullable = false)
   private double price;
   

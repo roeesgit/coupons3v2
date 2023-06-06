@@ -13,6 +13,7 @@ import org.springframework.stereotype.*;
 
 @Service
 @RequiredArgsConstructor
+/*This class managed authentication.*/
 public class AuthService {
   
   private final AuthenticationManager authenticationManager;

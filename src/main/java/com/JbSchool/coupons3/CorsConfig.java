@@ -10,6 +10,7 @@ import org.springframework.web.filter.*;
 
 import java.util.*;
 @Configuration
+/*This class define cors filter.*/
 public class CorsConfig {
   /**
    

@@ -17,6 +17,7 @@ import org.springframework.web.filter.*;
 
 import java.io.*;
 @Component @AllArgsConstructor
+
 public class CouponSecurityFilter extends OncePerRequestFilter {
   
   private final TokenConfig       tokenConfig;

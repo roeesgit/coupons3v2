@@ -19,6 +19,7 @@ import java.time.temporal.*;
 import java.util.*;
 @Component
 @RequiredArgsConstructor
+/*This class make init foe testing*/
 public class Basic implements CommandLineRunner {
   
   private final CouponUserAuthProvider couponUserAuthProvider;
@@ -64,7 +65,7 @@ public class Basic implements CommandLineRunner {
   private void initAdminOnly() {
     initCouponUsersAuth();
     CouponUser admin = CouponUser.builder()
-      .password(passwordEncoder.encode("Admin12#$"))
+      .password(passwordEncoder.encode("admin"))
       .username("admin@admin.com")
       .loggedUserName("Admin")
       .build();
@@ -110,10 +111,10 @@ public class Basic implements CommandLineRunner {
     int COUPONS = 130;
     for (int i = 0; i < COMPANIES; i++) {
       Company company = new Company();
-      company.setName("Company name " + (i + 1));
+      company.setName("Company " + (i + 1));
 //      company.setName(companyNames.get(i));
-      company.setEmail("companyEmail" + (i + 1) + "@gmail.com");
-      company.setPassword(passwordEncoder.encode("Company12#$"));
+      company.setEmail("company" + (i + 1) + "@gmail.com");
+      company.setPassword(passwordEncoder.encode("1234"));
       CouponUser companyUser = CouponUser.builder()
         .password(company.getPassword())
         .username(company.getEmail())
@@ -125,22 +126,22 @@ public class Basic implements CommandLineRunner {
       for (int j = 0; j < COUPONS; j++) {
         Coupon coupon = new Coupon();
         int ranDays = random.nextInt(55) + 5;
-        coupon.setAmount(random.nextInt(80) + 20);
+        coupon.setAmount((random.nextInt(100) + 10)*5);
         coupon.setEndDate(LocalDate.now().plus(4, ChronoUnit.MONTHS).plusDays(ranDays));
         coupon.setCompanyId(company.getId());
         coupon.setCategory(
           CategoryProvider.values()
             [(random.nextInt(CategoryProvider.values().length - 1) + 1)]
             .toString().toLowerCase());
-        coupon.setTitle("Company{"+company.getId()+ "} title " + (j + 1));
+        coupon.setTitle("title " + (j + 1)+ " Company{"+company.getId());
 //        coupon.setTitle(titles.get(j));
-        coupon.setDescription("description " + (j + 1));
+        coupon.setDescription("This is the coupon "+ (j + 1)+" description");
 //        coupon.setDescription(descriptions.get(j));
         coupon.setStartDate(LocalDate.now().plusDays(ranDays));
         picNum++;
         String pics =  "https://picsum.photos/seed/"+picNum+"/150/150";
         coupon.setImage(pics);
-        coupon.setPrice(random.nextInt(1900) + 100);
+        coupon.setPrice((random.nextInt(60) + 2)*5);
 //        if (i == 0 && j == 0) {
 //          coupon.setCategory(CategoryProvider.values()[0].toString().toLowerCase());
 //          coupon.setTitle("TEST " + (j + 1));
@@ -160,10 +161,10 @@ public class Basic implements CommandLineRunner {
     int CUSTOMERS = 200;
     for (int i = 0; i < CUSTOMERS; i++) {
       Customer customer = Customer.builder()
-        .firstName("first name " + (i + 1))
-        .lastName("last name " + (i + 1))
-        .email("customerEmail" + (i + 1) + "@gmail.com")
-        .password(this.passwordEncoder.encode("Customer12#$"))
+        .firstName("customer" + (i + 1))
+        .lastName("last" + (i + 1))
+        .email("customer" + (i + 1) + "@gmail.com")
+        .password(this.passwordEncoder.encode("1234"))
         .build();
       CouponUser customerUser = CouponUser.builder()
         .password(customer.getPassword())

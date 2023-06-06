@@ -61,7 +61,7 @@ public class CouponController {
   /**
    * Retrieves all coupons in the system.
    *
-   * @return A list of all coupons (List<CouponDto>).
+   * @return A list of all coupons
    */
   @GetMapping("/all")
   public List<CouponDto> getAll() {
@@ -82,7 +82,7 @@ public class CouponController {
   /**
    * Retrieves all coupons belonging to the company.
    *
-   * @return A list of company coupons (List<CouponDto>).
+   * @return A list of company coupons.
    */
   @GetMapping("/company")
   public List<CouponDto> getCompanyCoupons() {
@@ -93,7 +93,7 @@ public class CouponController {
    * Retrieves company coupons based on the specified category.
    *
    * @param category The category of the coupons.
-   * @return A list of company coupons in the specified category (List<CouponDto>).
+   * @return A list of company coupons in the specified category.
    */
   @GetMapping("/company/byCategory/{category}")
   public List<CouponDto> getCompanyCouponsByCategory(@PathVariable String category) {
@@ -104,7 +104,7 @@ public class CouponController {
    * Retrieves company coupons with a price less than or equal to the specified price.
    *
    * @param price The maximum price of the coupons.
-   * @return A list of company coupons with a price less than or equal to the specified price (List<CouponDto>).
+   * @return A list of company coupons with a price less than or equal to the specified price  .
    */
   @GetMapping("/company/byPrice/{price}")
   public List<CouponDto> getCompanyCouponsByPrice(@PathVariable int price) {
@@ -114,7 +114,7 @@ public class CouponController {
   /**
    * Retrieves all coupons belonging to the customer.
    *
-   * @return A list of customer coupons (List<CouponDto>).
+   * @return A list of customer coupons  .
    */
   @GetMapping("/customer")
   public List<CouponDto> getCustomerCoupons() {
@@ -125,7 +125,7 @@ public class CouponController {
    * Retrieves customer coupons based on the specified category.
    *
    * @param category The category of the coupons.
-   * @return A list of customer coupons in the specified category (List<CouponDto>).
+   * @return A list of customer coupons in the specified category  .
    */
   @GetMapping("/customer/category/{category}")
   public List<CouponDto> getCustomerCouponsByCategory(@PathVariable String category) {
@@ -136,7 +136,7 @@ public class CouponController {
    * Retrieves customer coupons with a price less than or equal to the specified price.
    *
    * @param price The maximum price of the coupons.
-   * @return A list of customer coupons with a price less than or equal to the specified price (List<CouponDto>).
+   * @return A list of customer coupons with a price less than or equal to the specified price  .
    */
   @GetMapping("/customer/byPrice/{price}")
   public List<CouponDto> getCustomerCouponsByPrice(@PathVariable int price) {
@@ -146,7 +146,7 @@ public class CouponController {
   /**
    * Retrieves valid coupons that a customer can purchase.
    *
-   * @return A list of valid coupons for purchase by the customer (List<CouponDto>).
+   * @return A list of valid coupons for purchase by the customer  .
    */
   @GetMapping("/customer/validToBuy")
   public List<CouponDto> getValidCouponTOPurchaseForCustomer() {

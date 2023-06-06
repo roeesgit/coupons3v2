@@ -15,6 +15,7 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 @Transactional
+/*This class managed company service.*/
 public class CompanyServiceImpl implements CompanyService {
   
   
